@@ -18,7 +18,6 @@ timeout 1 > nul
 endlocal
 
 
-
 :: Kopiowanie zawartości folderu ogólnego do folderów z zawartością do przeglądarek
 
 cd "dist/.top"

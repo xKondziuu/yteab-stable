@@ -22,7 +22,7 @@
     }
   ],
   "scripts": {
-    "build": "webpack build --mode none --config ./webpack.config.js && call build.cmd"
+    "build": "webpack build --mode none --config ./webpack.config.js && (sh build-linux.sh || call build-win.cmd)"
   },
   "devDependencies": {
     "@types/firefox": "^0.0.33",
