@@ -1,0 +1,14 @@
+{
+  "editor.tabSize": 2,
+  "files.exclude": {
+    "node_modules/": true,
+    "src/*/scss/css": true
+  },
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "compressed",
+      "extensionName": ".min.css",
+      "savePath": "~/css"
+    }
+  ],
+}

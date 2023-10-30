@@ -1,3 +1,4 @@
 dist/.top
+src/*/scss/css
 node_modules/
 Desktop.ini
