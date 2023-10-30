@@ -22,7 +22,7 @@
     }
   ],
   "scripts": {
-    "build": "webpack build --mode none --config ./webpack.config.js && cd \"./dist/.top\" && xcopy \"*\" \"../chrome/\" /e /c /i /y && xcopy \"*\" \"../mozilla/\" /e /c /i /y && cd ../.. && echo Done!"
+    "build": "webpack build --mode none --config ./webpack.config.js && call build.cmd"
   },
   "devDependencies": {
     "@types/firefox": "^0.0.33",
