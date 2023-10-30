@@ -14,19 +14,19 @@ for /d %%I in (%source_dir%\*) do (
   xcopy "!src_folder!\scss\css" "!dest_folder!" /e /c /i /y
 )
 
+timeout 1 > nul
 endlocal
 
 
 
 :: Kopiowanie zawartości folderu ogólnego do folderów z zawartością do przeglądarek
 
-cd "./dist"
+cd "dist/.top"
 
-xcopy ".top/*" "../chrome/" /e /c /i /y
-xcopy ".top/*" "../mozilla/" /e /c /i /y
+xcopy "*" "../chrome/" /e /c /i /y
+xcopy "*" "../mozilla/" /e /c /i /y
 
-cd ..
-
+cd ../..
 
 
 echo Done!
