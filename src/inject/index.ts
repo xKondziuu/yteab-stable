@@ -1,7 +1,7 @@
 import * as pack from '../../package.json'
 
 
-export const inject: inject.Index = {
+const inject: inject.Index = {
 
   _v: pack.version,
 
@@ -10,3 +10,6 @@ export const inject: inject.Index = {
   //
 
 }
+
+
+export default inject
