@@ -1,4 +1,8 @@
 import * as pack from '../../package.json'
+import { embed as module_embed } from './watch/embed'
+import { events as module_events } from './events'
+import { logger as module_logger } from './logger'
+import { sync as module_sync } from './watch/sync'
 
 
 /**
@@ -11,9 +15,13 @@ const inject: inject.Index = {
 
   _v: pack.version,
 
-  //
-  // Tutaj wszystkie zaimportowanae moduły
-  //
+  watch: {
+    embed: module_embed,
+    sync: module_sync
+  },
+
+  events: module_events,
+  logger: module_logger
 
 }
 

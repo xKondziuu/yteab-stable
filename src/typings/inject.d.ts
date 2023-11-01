@@ -10,6 +10,14 @@ declare namespace inject {
 
     _v: string
 
+    watch: {
+      embed: inject.watch.Embed
+      sync: inject.watch.Sync
+    }
+
+    events: inject.Events
+    logger: inject.Logger
+
   }
 
   interface Events {
