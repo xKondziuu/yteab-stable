@@ -20,6 +20,9 @@ var globalConfig = {
     ]
   },
   target: 'webworker',
+  resolve: {
+    extensions: ['.ts', '.js', '.json', '.css']
+  },
   plugins: [
     new webpack.DefinePlugin({  // ustawienie trybu production
       'process.env.NODE_ENV': JSON.stringify('production')
