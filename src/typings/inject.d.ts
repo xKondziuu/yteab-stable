@@ -28,7 +28,9 @@ declare namespace inject {
 
   interface Logger {
 
-
+    log: Function
+    error: Function
+    warn: Function
 
   }
 
