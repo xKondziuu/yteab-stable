@@ -1,3 +1,9 @@
+/**
+ * Deklaracje typów dla main.
+ * @namespace main
+ * @see /src/main.ts
+ */
+
 declare namespace main {
 
   interface Regex {
