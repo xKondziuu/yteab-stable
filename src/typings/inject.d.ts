@@ -4,6 +4,12 @@
  * @see /src/inject/index.ts
  */
 
+interface listenIgnore {
+  listen: Function
+  ignore: Function
+}
+
+
 declare namespace inject {
 
   interface Index {
@@ -22,7 +28,11 @@ declare namespace inject {
 
   interface Events {
 
-
+    youtube: {
+      yt_navigate_finish: listenIgnore
+      yt_navigate_start: listenIgnore
+      yt_page_type_changed: listenIgnore
+    }
 
   }
 
