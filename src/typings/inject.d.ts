@@ -32,6 +32,12 @@ declare namespace inject {
     error: Function
     warn: Function
 
+    debug: {
+      log: Function
+      error: Function
+      warn: Function
+    }
+
   }
 
   namespace watch {

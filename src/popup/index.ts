@@ -1,4 +1,5 @@
 import * as pack from '../../package.json'
+import { logger } from '../logger'
 
 
 /**
@@ -16,6 +17,9 @@ const popup: popup.Index = {
   //
 
 }
+
+
+logger.debug.log('/src/popup/index.ts loaded!')
 
 
 export default popup

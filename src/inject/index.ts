@@ -1,7 +1,8 @@
 import * as pack from '../../package.json'
+import { logger } from '../logger'
 import { embed as module_embed } from './watch/embed'
 import { events as module_events } from './events'
-import { logger as module_logger } from './logger'
+import { logger as module_logger } from '../logger'
 import { sync as module_sync } from './watch/sync'
 
 
@@ -24,6 +25,9 @@ const inject: inject.Index = {
   logger: module_logger
 
 }
+
+
+logger.debug.log('/src/inject/index.ts loaded!')
 
 
 export default inject

@@ -1,3 +1,7 @@
+import * as dev from './dev.json'
+import { logger } from './logger'
+
+
 /**
  * Regexy używane do walidacji adresów.
  * @module Regex
@@ -23,6 +27,9 @@ const ytelem: main.Ytelem = {
     video: () => document.querySelector('ytd-player div.html5-video-container video')
   }
 }
+
+
+logger.debug.log('/src/main.ts loaded!')
 
 
 export {regex, ytelem}
