@@ -1,5 +1,6 @@
 import inject from '.'
 import { logger } from '../logger'
+import { embed } from './watch/embed'
 
 
 /**
@@ -50,8 +51,18 @@ export const events: inject.events.Module = {
           ) {
 
             logger.log('Video overwrite possible')
+            embed.preparation.preserve(data)
+
+          } else {
+
+            logger.log('Video overwrite not possible')
+            embed.preparation.cancel(data)
 
           }
+
+        } else {
+
+          logger.error('Cannot read yt-navigate-finish')
 
         }
 
@@ -60,7 +71,19 @@ export const events: inject.events.Module = {
       case 'yt-navigate-start': if (event) {
         const data = event as YouTube.EventResponse.Event.yt_navigate_start
 
-        // Event na rozpoczęcie nawigacji
+        if (data.returnValue) {
+
+          if (data.detail.pageType == 'watch') {
+
+            embed.prepare(data)
+
+          }
+
+        } else {
+
+          logger.error('Cannot read yt-navigate-start')
+
+        }
 
         break
       }
