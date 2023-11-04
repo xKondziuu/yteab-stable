@@ -21,4 +21,10 @@ declare namespace main {
     }
   }
 
+  interface Yteabelem {
+    watch: {
+      iframe: () => HTMLIFrameElement | null
+    }
+  }
+
 }
