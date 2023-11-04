@@ -4,12 +4,6 @@
  * @see /src/inject/index.ts
  */
 
-interface listenIgnore {
-  listen: Function
-  ignore: Function
-}
-
-
 declare namespace inject {
 
   namespace index {
@@ -24,7 +18,7 @@ declare namespace inject {
       }
 
       events: inject.events.Module
-      logger: inject.events.Module
+      logger: inject.logger.Module
 
     }
 
