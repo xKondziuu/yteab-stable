@@ -43,6 +43,12 @@ declare namespace inject {
 
       interface Module {
 
+        prepare: (yt_navigate_start:YouTube.EventResponse.Event.yt_navigate_start) => void
+        preparation: {
+          preserve: (yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish) => void
+          cancel: (yt_navigate_finish?:YouTube.EventResponse.Event.yt_navigate_finish) => void
+        }
+
       }
 
     }
