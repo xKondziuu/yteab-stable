@@ -6,6 +6,28 @@ declare namespace YouTube {
   type qualityLabel = '144p'|'240p'|'360p'|'480p'|'720p'|'1080p'|'1440p'|'2160p'|'2880p'|'4320p'
   type fps = 25|30|48|50|60
 
+  namespace Iframe {
+
+    namespace src {
+
+      type videoid = string
+
+      interface settings {
+        v: number,
+        autoplay: 0|1,
+        enablejsapi: 0|1,
+        fs: 0|1,
+        modestbranding: 0|1,
+        origin: string,
+        rel: 0|1,
+        showinfo: 0|1,
+        start: number
+      }
+
+    }
+
+  }
+
   namespace EventResponse {
 
     namespace streamingData {
@@ -395,13 +417,13 @@ declare namespace YouTube {
             commandMetadata: {
               webCommandMetadata: {
                 rootVe: number
-                url: string
+                url: string   //IMPORTANT
                 webPageType: string
               }
             },
             watchEndpoint: {
               nofollow: boolean
-              videoId: string
+              videoId: string   //IMPORTANT
               watchEndpointSupportedOnesieConfig: {
                 html5PlaybackOnesieConfig: {
                   commonConfig: {
@@ -411,9 +433,9 @@ declare namespace YouTube {
               }
             }
           }
-          pageType: string
-          reload: boolean
-          url: string
+          pageType: string   //IMPORTANT
+          reload: boolean   //IMPORTANT
+          url: string   //IMPORTANT
         }
         eventPhase: number
         explicitOriginalTarget: HTMLElement
