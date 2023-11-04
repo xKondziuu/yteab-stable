@@ -18,7 +18,7 @@ declare namespace inject {
       }
 
       events: inject.events.Module
-      logger: inject.logger.Module
+      logger: logger.Module
 
     }
 
@@ -32,24 +32,6 @@ declare namespace inject {
 
       listen: (listeners:Listeners) => void
       run: (listeners:Listeners, event?:Event) => void
-
-    }
-
-  }
-
-  namespace logger {
-
-    interface Module {
-
-      log: Function
-      error: Function
-      warn: Function
-
-      debug: {
-        log: Function
-        error: Function
-        warn: Function
-      }
 
     }
 
