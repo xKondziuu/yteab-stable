@@ -10,7 +10,7 @@ let prefix = name.toLocaleUpperCase()
  * @module Logger
  * @memberof inject
  */
-export const logger: inject.logger.Module = {
+export const logger: logger.Module = {
 
   log(message:string): void {
     if (dev.logger) console.log(`[${prefix}] - ${String(message)}`)
@@ -26,18 +26,13 @@ export const logger: inject.logger.Module = {
 
   debug: {
 
-    log(message:string): void {
-      if (dev.logger && dev.debug) console.log(`[${prefix}] - DEBUG: ${String(message)}`)
-    },
-
-    error(message:string): void {
-      if (dev.logger && dev.debug) console.error(`[${prefix}] - DEBUG: ${String(message)}`)
-    },
-
-    warn(message:string): void {
-      if (dev.logger && dev.debug) console.warn(`[${prefix}] - DEBUG: ${String(message)}`)
+    loaded(path:string): void {
+      if (dev.logger && dev.debug) console.log(`[${prefix}] - DEBUG: /src/${String(path)} loaded!`)
     }
 
   }
 
 }
+
+
+logger.debug.loaded('logger.ts')
