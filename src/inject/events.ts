@@ -1,4 +1,5 @@
 import inject from '.'
+import { logger } from '../logger'
 
 
 /**
@@ -35,20 +36,20 @@ export const events: inject.events.Module = {
       case 'yt-navigate-finish': if (event) {
         let data = event as YouTube.EventResponse.Event.yt_navigate_finish
 
-
+        // Event na zakończenie nawigacji
 
         break
       }
       case 'yt-navigate-start': if (event) {
         let data = event as YouTube.EventResponse.Event.yt_navigate_start
 
-
+        // Event na rozpoczęcie nawigacji
 
         break
       }
       case 'yt-page-type-changed': {
 
-
+        // Event na zmianę typu strony
 
         break
       }
@@ -57,3 +58,6 @@ export const events: inject.events.Module = {
   }
 
 }
+
+
+logger.debug.loaded('inject/events.ts')

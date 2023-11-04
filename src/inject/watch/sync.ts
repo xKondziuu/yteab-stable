@@ -1,4 +1,5 @@
 import inject from '..'
+import { logger } from '../../logger'
 
 
 /**
@@ -12,3 +13,6 @@ export const sync: inject.watch.sync.Module = {
 
 
 }
+
+
+logger.debug.loaded('inject/watch/sync.ts')

@@ -29,7 +29,6 @@ const ytelem: main.Ytelem = {
 }
 
 
-logger.debug.log('/src/main.ts loaded!')
-
+logger.debug.loaded('main.ts')
 
 export {regex, ytelem}

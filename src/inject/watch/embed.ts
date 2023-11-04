@@ -1,4 +1,5 @@
 import inject from '..'
+import { logger } from '../../logger'
 
 
 /**
@@ -12,3 +13,6 @@ export const embed: inject.watch.embed.Module = {
 
 
 }
+
+
+logger.debug.loaded('inject/watch/embed.ts')
