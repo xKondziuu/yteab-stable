@@ -14,6 +14,18 @@ const regex: main.Regex = {
 
 
 /**
+ * Szybkie referencje do naszych elementow.
+ * @module Yteabelem
+ * @memberof main
+ */
+const yteabelem: main.Yteabelem = {
+  watch: {
+    iframe: () => document.querySelector('ytd-player iframe#yteab'),
+  }
+}
+
+
+/**
  * Szybkie referencje do elementów youtube.
  * @module Ytelem
  * @memberof main
@@ -31,4 +43,4 @@ const ytelem: main.Ytelem = {
 
 logger.debug.loaded('main.ts')
 
-export {regex, ytelem}
+export {regex, yteabelem, ytelem}
