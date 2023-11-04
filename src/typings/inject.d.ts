@@ -14,7 +14,7 @@ declare namespace inject {
 
       watch: {
         embed: inject.watch.embed.Module
-        sync: inject.watch.embed.Module
+        sync: inject.watch.sync.Module
       }
 
       events: inject.events.Module
