@@ -28,7 +28,17 @@ const inject: inject.index.Module = {
 }
 
 
-logger.debug.log('/src/inject/index.ts loaded!')
+/**
+ * Załadowanie modułu index do okna przeglądarki.
+ * @implements @module index
+ */
+;(function init() {
+  window.yteab = inject
+  if (window.yteab == inject) {
+    logger.debug.loaded('inject/index.ts')
+    logger.log('Extension loaded successfully!')
+  }
+})();
 
 
 export default inject
