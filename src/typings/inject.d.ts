@@ -12,55 +12,70 @@ interface listenIgnore {
 
 declare namespace inject {
 
-  interface Index {
+  namespace index {
 
-    _v: string
+    interface Module {
 
-    watch: {
-      embed: inject.watch.Embed
-      sync: inject.watch.Sync
-    }
+      _v: string
 
-    events: inject.Events
-    logger: inject.Logger
+      watch: {
+        embed: inject.watch.embed.Module
+        sync: inject.watch.embed.Module
+      }
 
-  }
+      events: inject.events.Module
+      logger: inject.events.Module
 
-  interface Events {
-
-    youtube: {
-      yt_navigate_finish: listenIgnore
-      yt_navigate_start: listenIgnore
-      yt_page_type_changed: listenIgnore
     }
 
   }
 
-  interface Logger {
+  namespace events {
 
-    log: Function
-    error: Function
-    warn: Function
+    type Listeners = 'yt-navigate-finish'|'yt-navigate-start'|'yt-page-type-changed'
 
-    debug: {
+    interface Module {
+
+      listen: (listeners:Listeners) => void
+      run: (listeners:Listeners, event?:Event) => void
+
+    }
+
+  }
+
+  namespace logger {
+
+    interface Module {
+
       log: Function
       error: Function
       warn: Function
+
+      debug: {
+        log: Function
+        error: Function
+        warn: Function
+      }
+
     }
 
   }
 
   namespace watch {
 
-    interface Embed {
+    namespace embed {
 
+      interface Module {
 
+      }
 
     }
 
-    interface Sync {
+    namespace sync {
 
+      interface Module {
 
+      }
 
     }
 

@@ -8,11 +8,12 @@ import { sync as module_sync } from './watch/sync'
 
 /**
  * Zbiór modułów i funkcji z namespaceu inject.
- * @module Index
+ * @interface Module
+ * @module index
  * @memberof inject
  * @see /src/typings/inject.d.ts
  */
-const inject: inject.Index = {
+const inject: inject.index.Module = {
 
   _v: pack.version,
 
