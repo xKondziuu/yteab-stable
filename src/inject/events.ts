@@ -2,7 +2,7 @@ import inject from '.'
 
 
 /**
- * Eventy na youtube
+ * Eventy elementu document na youtube
  * @event yt-guide-close - zamknięcie menu nawigacji
  * @event yt-guide-show - otwercie menu nawigacji
  * @event yt-guide-toggle - przełączenie menu nawigacji
@@ -15,57 +15,43 @@ import inject from '.'
  */
 
 
-const listeners = {
-
-  yt_navigate_finish() {
-
-    // funkcja do wykonania gdy event
-
-  },
-
-  yt_navigate_start() {
-
-    // funkcja do wykonania gdy event
-
-  },
-
-  yt_page_type_changed() {
-
-    // funkcja do wykonania gdy event
-
-  }
-
-}
-
-
 /**
  * Moduł z funkcjami do wychwytywania eventów z youtube.
- * @module Events
+ * @interface Module
+ * @module events
  * @memberof inject
  */
-export const events: inject.Events = {
+export const events: inject.events.Module = {
 
-  youtube: {
+  listen(listener:inject.events.Listeners): void {
 
-    yt_navigate_finish: {
+    document.addEventListener(listener, (event) => this.run(listener, event))
 
-      listen() { document.addEventListener('yt-navigate-finish', listeners.yt_navigate_finish) },
-      ignore() { document.removeEventListener('yt-navigate-finish', listeners.yt_navigate_finish) }
+  },
 
-    },
+  run(listener:inject.events.Listeners, event?:Event|unknown) {
 
-    yt_navigate_start: {
+    switch (listener) {
+      case 'yt-navigate-finish': if (event) {
+        let data = event as YouTube.EventResponse.Event.yt_navigate_finish
 
-      listen() { document.addEventListener('yt-navigate-start', listeners.yt_navigate_start) },
-      ignore() { document.addEventListener('yt-navigate-start', listeners.yt_navigate_start) }
 
-    },
 
-    yt_page_type_changed: {
+        break
+      }
+      case 'yt-navigate-start': if (event) {
+        let data = event as YouTube.EventResponse.Event.yt_navigate_start
 
-      listen() { document.addEventListener('yt-page-type-changed', listeners.yt_page_type_changed) },
-      ignore() { document.addEventListener('yt-page-type-changed', listeners.yt_page_type_changed) }
 
+
+        break
+      }
+      case 'yt-page-type-changed': {
+
+
+
+        break
+      }
     }
 
   }
