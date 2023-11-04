@@ -118,7 +118,7 @@ declare namespace YouTube {
               watchEndpointSupportedOnesieConfig: {
                 html5PlaybackOnesieConfig: {
                   commonConfig: {
-                      url: string
+                    url: string
                   }
                 }
               }

@@ -3,7 +3,7 @@ import { name } from '../package.json'
 import * as dev from './dev.json'
 
 
-let prefix = name.toLocaleUpperCase()
+let prefix = name.split('-')[0].toLocaleUpperCase()
 
 /**
  * Moduł z funkcjami do tworzenia logów w konsoli przeglądarki użytkownika.

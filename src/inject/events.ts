@@ -34,14 +34,31 @@ export const events: inject.events.Module = {
 
     switch (listener) {
       case 'yt-navigate-finish': if (event) {
-        let data = event as YouTube.EventResponse.Event.yt_navigate_finish
+        const data = event as YouTube.EventResponse.Event.yt_navigate_finish
 
-        // Event na zakończenie nawigacji
+        if (data.returnValue) {
+
+          const response = data.detail.response
+
+          if (
+            response.page == 'watch' &&
+            response.playerResponse.playabilityStatus.status == 'OK' &&
+            response.playerResponse.playabilityStatus.playableInEmbed &&
+            response.playerResponse.videoDetails.isOwnerViewing == false &&
+            response.playerResponse.videoDetails.isPrivate == false &&
+            response.playerResponse.videoDetails.isLiveContent == false
+          ) {
+
+            logger.log('Video overwrite possible')
+
+          }
+
+        }
 
         break
       }
       case 'yt-navigate-start': if (event) {
-        let data = event as YouTube.EventResponse.Event.yt_navigate_start
+        const data = event as YouTube.EventResponse.Event.yt_navigate_start
 
         // Event na rozpoczęcie nawigacji
 
