@@ -58,24 +58,32 @@ export const events: inject.events.Module = {
 
         if (data.returnValue) {
 
-          const response = data.detail.response
+          if (data.detail.pageType == 'watch') {
 
-          if (
-            response.page == 'watch' &&
-            response.playerResponse.playabilityStatus.status == 'OK' &&
-            response.playerResponse.playabilityStatus.playableInEmbed &&
-            response.playerResponse.videoDetails.isOwnerViewing == false &&
-            response.playerResponse.videoDetails.isPrivate == false &&
-            response.playerResponse.videoDetails.isLiveContent == false
-          ) {
+            const response = data.detail.response
 
-            logger.log('Video overwrite possible')
-            embed.preparation.preserve(data)
+            if (
+              response.page == 'watch' &&
+              response.playerResponse.playabilityStatus.status == 'OK' &&
+              response.playerResponse.playabilityStatus.playableInEmbed &&
+              response.playerResponse.videoDetails.isOwnerViewing == false &&
+              response.playerResponse.videoDetails.isPrivate == false &&
+              response.playerResponse.videoDetails.isLiveContent == false
+            ) {
+
+              logger.log('Video overwrite possible')
+              embed.preparation.preserve(data)
+
+            } else {
+
+              logger.log('Video overwrite not possible')
+              embed.preparation.cancel(data)
+
+            }
 
           } else {
 
-            logger.log('Video overwrite not possible')
-            embed.preparation.cancel(data)
+            embed.remove()
 
           }
 

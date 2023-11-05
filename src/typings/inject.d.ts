@@ -47,7 +47,8 @@ declare namespace inject {
         preparation: {
           preserve: (yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish) => void
           cancel: (yt_navigate_finish?:YouTube.EventResponse.Event.yt_navigate_finish) => void
-        }
+        },
+        remove: () => void
 
       }
 

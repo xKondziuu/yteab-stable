@@ -28,10 +28,7 @@ export const embed: inject.watch.embed.Module = {
     if (!video_container) return
 
     /** Jeśli element <iframe> istnjeje to go usuwamy */
-    if (yteabelem.watch.iframe()) {
-      yteabelem.watch.iframe()?.remove()
-      logger.log('Existing iframe removed')
-    }
+    embed.remove()
 
     // pobieramy id wideo
     const videoid: YouTube.Iframe.src.videoid = yt_navigate_start.detail.endpoint.watchEndpoint.videoId
@@ -98,6 +95,28 @@ export const embed: inject.watch.embed.Module = {
      * @see /src/inject/events.ts run(listener, event?)
      */
     cancel(yt_navigate_finish?:YouTube.EventResponse.Event.yt_navigate_finish) {
+
+    }
+
+  },
+
+  /**
+   * Funkcja do usuwania elementu <iframe> jeśli istnieje.
+   * @see /src/inject/events.ts run(listener, event?)
+   */
+  remove() {
+
+    let iframe: HTMLIFrameElement|undefined|null = yteabelem.watch.iframe()
+
+    if (iframe) {
+
+      try {
+        iframe?.remove()
+      } catch (error) {
+        logger.log(`Unable to remove iframe:\n${error}`)
+      } finally {
+        logger.log('Existing iframe removed')
+      }
 
     }
 
