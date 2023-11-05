@@ -2,12 +2,12 @@ declare namespace logger {
 
   interface Module {
 
-    log: Function
-    error: Function
-    warn: Function
+    log: (message:string) => void
+    error: (message:string) => void
+    warn: (message:string) => void
 
     debug: {
-      loaded: Function
+      loaded: (path:string) => void
     }
 
   }
