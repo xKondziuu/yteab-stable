@@ -33,8 +33,11 @@ export const embed: inject.watch.embed.Module = {
     // pobieramy id wideo
     const videoid: YouTube.Iframe.src.videoid = yt_navigate_start.detail.endpoint.watchEndpoint.videoId
 
+    // wybieramy interesujące nas ustawienia
+    type iframesett = Pick< YouTube.Iframe.src.settings, ('autoplay'|'enablejsapi'|'fs'|'modestbranding'|'origin'|'rel'|'showinfo'|'start'|'v') >
+
     // ustawiamy parametry odtwarzacza embed
-    const settings: YouTube.Iframe.src.settings = {
+    const settings: iframesett = {
       autoplay: 1,        // automatyczne odtwarzanie wideo
       enablejsapi: 1,     // api umożliwiające ustawienie źródła odtwarzania
       fs: 1,              // zezwolenie na pełny ekran
@@ -48,7 +51,7 @@ export const embed: inject.watch.embed.Module = {
 
     // konwertujemy objekt na string URLSearchParams()
     const querySettings = Object.keys(settings)
-    .map(key => `${key}=${encodeURIComponent(settings[key as keyof YouTube.Iframe.src.settings])}`)
+    .map(key => `${key}=${encodeURIComponent(settings[key as keyof iframesett])}`)
     .join('&')
 
     /** Tworzymy element <iframe> do późniejszej edycji */
