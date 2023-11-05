@@ -25,15 +25,28 @@ import { embed } from './watch/embed'
  */
 export const events: inject.events.Module = {
 
+  /**
+   * Funkcja uruchamiająca nasłuchiwanie podanego eventu na elemencie document
+   * poprzez addEventListener i uruchomienie run(listener) po wywołaniu eventu.
+   * @param {string} listener - Jeden z eventów określonych w switch w run()
+   */
   listen(listener:inject.events.Listeners): void {
 
     document.addEventListener(listener, (event) => this.run(listener, event))
 
   },
 
-  run(listener:inject.events.Listeners, event?:Event|unknown) {
+  /**
+   * Funkcja która uruchamia inne funkcje itp po wywołaniu danego eventu, którego nasłuchiwanie
+   * zostało wcześniej włączone poprzez listen(listener), dodatkowo może używać objektu event.
+   * @param {string} listener - Jeden z eventów określonych w switch w run(listener, event?)
+   * @param {Event|unknown} event - Objekt event zwracany przez addEventListener po wywołaniu eventu
+   */
+  run(listener:inject.events.Listeners, event?:Event|unknown): void {
 
     switch (listener) {
+
+      /** Ukończono przekierowania w nawigacji */
       case 'yt-navigate-finish': if (event) {
         const data = event as YouTube.EventResponse.Event.yt_navigate_finish
 
@@ -68,6 +81,8 @@ export const events: inject.events.Module = {
 
         break
       }
+
+      /** Rozpoczęto przekierowania nawigacji */
       case 'yt-navigate-start': if (event) {
         const data = event as YouTube.EventResponse.Event.yt_navigate_start
 
@@ -87,12 +102,15 @@ export const events: inject.events.Module = {
 
         break
       }
+
+      /** Zmieniono typ wyświetlanej strony */
       case 'yt-page-type-changed': {
 
-        // Event na zmianę typu strony
+        // Tutaj event na zmianę typu strony
 
         break
       }
+
     }
 
   }
