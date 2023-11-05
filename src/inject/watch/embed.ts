@@ -21,6 +21,8 @@ export const embed: inject.watch.embed.Module = {
    */
   prepare(yt_navigate_start:YouTube.EventResponse.Event.yt_navigate_start): void {
 
+    logger.log('Preparing video iframe...')
+
     /** Element <div> zawierający <video> */
     let video_container: HTMLDivElement|null = ytelem.watch.video_container()
     if (!video_container) return
@@ -28,7 +30,7 @@ export const embed: inject.watch.embed.Module = {
     /** Jeśli element <iframe> istnjeje to go usuwamy */
     if (yteabelem.watch.iframe()) {
       yteabelem.watch.iframe()?.remove()
-      logger.log('Existing frame removed')
+      logger.log('Existing iframe removed')
     }
 
     // pobieramy id wideo
@@ -67,6 +69,10 @@ export const embed: inject.watch.embed.Module = {
 
     /** Dodajemy element <iframe> do wcześniej otrzymanego video_container */
     video_container.appendChild(iframe)
+
+    if (yteabelem.watch.iframe())
+    logger.log('Iframe rendered successfully!')
+    logger.log('Ready for further instructions')
 
   },
 

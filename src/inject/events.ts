@@ -32,7 +32,13 @@ export const events: inject.events.Module = {
    */
   listen(listener:inject.events.Listeners): void {
 
-    document.addEventListener(listener, (event) => this.run(listener, event))
+    try {
+      document.addEventListener(listener, (event) => this.run(listener, event))
+    } catch (error) {
+      logger.error(`Unable to listen ${listener}:\n${error}`)
+    } finally {
+      logger.log(`Now listening for event: ${listener}`)
+    }
 
   },
 
