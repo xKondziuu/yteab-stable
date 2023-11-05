@@ -18,6 +18,8 @@ declare namespace inject {
       }
 
       events: inject.events.Module
+      urlparams: inject.urlparams.Module
+
       logger: logger.Module
 
     }
@@ -32,6 +34,17 @@ declare namespace inject {
 
       listen: (listeners:Listeners) => void
       run: (listeners:Listeners, event?:Event) => void
+
+    }
+
+  }
+
+  namespace urlparams {
+
+    interface Module {
+
+      current: () => URLSearchParams
+      custom: (params:string) => URLSearchParams
 
     }
 

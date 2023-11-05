@@ -4,6 +4,7 @@ import { embed as module_embed } from './watch/embed'
 import { events as module_events } from './events'
 import { logger as module_logger } from '../logger'
 import { sync as module_sync } from './watch/sync'
+import { urlparams as module_urlparams } from './urlparams'
 
 
 /**
@@ -23,6 +24,8 @@ const inject: inject.index.Module = {
   },
 
   events: module_events,
+  urlparams: module_urlparams,
+
   logger: module_logger
 
 }
