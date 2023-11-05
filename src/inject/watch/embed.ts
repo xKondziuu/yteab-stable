@@ -50,7 +50,7 @@ export const embed: inject.watch.embed.Module = {
     // konwertujemy objekt na string URLSearchParams()
     const querySettings = Object.keys(settings)
     .map(key => `${key}=${encodeURIComponent(settings[key as keyof YouTube.Iframe.src.settings])}`)
-    .join('&');
+    .join('&')
 
     /** Tworzymy element <iframe> do późniejszej edycji */
     let iframe = document.createElement('iframe')
