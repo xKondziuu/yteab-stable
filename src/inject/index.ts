@@ -37,6 +37,8 @@ const inject: inject.index.Module = {
   if (window.yteab == inject) {
     logger.debug.loaded('inject/index.ts')
     logger.log('Extension loaded successfully!')
+    inject.events.listen('yt-navigate-finish')
+    inject.events.listen('yt-navigate-start')
   }
 })();
 
