@@ -37,7 +37,7 @@ export const events: inject.events.Module = {
     } catch (error) {
       logger.error(`Unable to listen ${listener}:\n${error}`)
     } finally {
-      logger.log(`Now listening for event: ${listener}`)
+      logger.log(`Listening for event: ${listener}`)
     }
 
   },
