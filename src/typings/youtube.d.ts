@@ -13,15 +13,15 @@ declare namespace YouTube {
       type videoid = string
 
       interface settings {
-        v: number,
-        autoplay: 0|1,
-        enablejsapi: 0|1,
-        fs: 0|1,
-        modestbranding: 0|1,
-        origin: string,
-        rel: 0|1,
-        showinfo: 0|1,
+        autoplay: 0|1
+        enablejsapi: 0|1
+        fs: 0|1
+        modestbranding: 0|1
+        origin: string
+        rel: 0|1
+        showinfo: 0|1
         start: number
+        v: number
       }
 
     }

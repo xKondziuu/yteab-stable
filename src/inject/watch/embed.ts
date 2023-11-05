@@ -25,7 +25,6 @@ export const embed: inject.watch.embed.Module = {
     const videoid: YouTube.Iframe.src.videoid = yt_navigate_start.detail.endpoint.watchEndpoint.videoId
 
     const settings: YouTube.Iframe.src.settings = {
-      v: 3,
       autoplay: 1,
       enablejsapi: 1,
       fs: 1,
@@ -33,7 +32,8 @@ export const embed: inject.watch.embed.Module = {
       origin: '0.0.0.0',
       rel: 0,
       showinfo: 0,
-      start: 0 // zrob to kondzius <3
+      start: 0, //todo
+      v: 3
     }
 
     const querySettings = Object.keys(settings)
