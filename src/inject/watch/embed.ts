@@ -70,9 +70,10 @@ export const embed: inject.watch.embed.Module = {
     /** Dodajemy element <iframe> do wcześniej otrzymanego video_container */
     video_container.appendChild(iframe)
 
-    if (yteabelem.watch.iframe())
-    logger.log('Iframe rendered successfully!')
-    logger.log('Ready for further instructions')
+    if (yteabelem.watch.iframe()) {
+      logger.log('Iframe rendered successfully!')
+      logger.log('Ready for further instructions')
+    }
 
   },
 
