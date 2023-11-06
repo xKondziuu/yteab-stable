@@ -1,6 +1,7 @@
 import inject from '.'
 import { logger } from '../logger'
 import { embed } from './watch/embed'
+import { yteabelem } from '../main'
 
 
 /**
@@ -56,26 +57,54 @@ export const events: inject.events.Module = {
       case 'yt-navigate-finish': if (event) {
         const data = event as YouTube.EventResponse.Event.yt_navigate_finish
 
+        // jeśli event zwrócił wartość
         if (data.returnValue) {
 
+          // jeśli typ załadowanej strony to 'watch'
           if (data.detail.pageType == 'watch') {
 
+            /** Pobieramy dane odpowiedzi */
             const response = data.detail.response
 
-            if (
-              response.page == 'watch' &&
-              response.playerResponse.playabilityStatus.status == 'OK' &&
-              response.playerResponse.playabilityStatus.playableInEmbed &&
-              response.playerResponse.videoDetails.isOwnerViewing == false &&
-              response.playerResponse.videoDetails.isPrivate == false &&
-              response.playerResponse.videoDetails.isLiveContent == false
+            if (  // jeśli poniższe warunki są spełnione
+              response.page == 'watch' &&                                      // czy typ strony to 'watch'
+              response.playerResponse.playabilityStatus.status == 'OK' &&      // czy wideo załadowało się poprawnie
+              response.playerResponse.playabilityStatus.playableInEmbed &&     // czy możnaje je odtwarzać w ramce
+              response.playerResponse.videoDetails.isOwnerViewing == false &&  // czy wyświetla właściciel
+              response.playerResponse.videoDetails.isPrivate == false &&       // czy jest prywatne
+              response.playerResponse.videoDetails.isLiveContent == false      // czy to transmisja live
             ) {
 
               logger.log('Video overwrite possible')
-              embed.preparation.preserve(data)
+
+              /** Pobieramy ID wczytanego wideo */
+              const videoid: YouTube.Iframe.src.videoid = response.endpoint.watchEndpoint.videoId
+
+              /**
+               * Jeżeli funkcja prepare(yt_navigate_start) przygotowała już ramkę, przetwarzamy
+               * ją dalej używając funkcji preserve(yt_navigate_finish), w przeciwnym wypadku
+               * tworzymy ją używając create(videoid, callback?) i dopiero potem przetwarzamy.
+               * @see /src/inject/watch/embed.ts
+               */
+              if (yteabelem.watch.iframe.id(videoid)) {
+
+                // przetwarzanie już utworzonej ramki
+                embed.preparation.preserve(data)
+
+              } else {
+
+                // tworzenie ramki którą później będziemy przetwarzać
+                embed.create(videoid, ()=>{
+                  logger.log('Ready for further instructions')
+                  embed.preparation.preserve(data)
+                })
+
+              }
+
 
             } else {
 
+              // jeśli warunki nie zostały spełnione, anulujemy przygotowanie ramki
               logger.log('Video overwrite not possible')
               embed.preparation.cancel(data)
 
@@ -83,6 +112,7 @@ export const events: inject.events.Module = {
 
           } else {
 
+            // jeśli typ załadwanej strony to nie 'watch', usuwamy wszystkie ramki
             embed.remove()
 
           }
@@ -100,10 +130,17 @@ export const events: inject.events.Module = {
       case 'yt-navigate-start': if (event) {
         const data = event as YouTube.EventResponse.Event.yt_navigate_start
 
+        // jeśli event zwrócił wartość
         if (data.returnValue) {
 
+          // jeśli typ strony do załadowania to 'watch'
           if (data.detail.pageType == 'watch') {
 
+            /**
+             * Przygotowujemy (wstępnie tworzymy) ramkę, po wywołaniu eventu yt-navigate-finish
+             * zostanie czy słusznie to zrobiliśmy, ale tutaj już się nad tym nie zastanawiamy.
+             * @see /src/inject/watch/embed.ts
+             */
             embed.prepare(data)
 
           }
