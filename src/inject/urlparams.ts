@@ -6,7 +6,7 @@ import { logger } from '../logger'
  * Moduł z funkcjami do otrzymania URLSearchParams z obecnego adresu lub podanego stringa.
  * @interface Module
  * @module urlparams
- * @memberof inject/watch
+ * @memberof inject
  */
 export const urlparams: inject.urlparams.Module = {
 
@@ -21,4 +21,4 @@ export const urlparams: inject.urlparams.Module = {
 }
 
 
-logger.debug.loaded('inject/watch/urlparams.ts')
+logger.debug.loaded('inject/urlparams.ts')
