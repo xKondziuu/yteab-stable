@@ -14,6 +14,7 @@ declare namespace inject {
 
       watch: {
         embed: inject.watch.embed.Module
+        mute: inject.watch.mute.Module
         sync: inject.watch.sync.Module
       }
 
@@ -56,12 +57,25 @@ declare namespace inject {
 
       interface Module {
 
-        prepare: (yt_navigate_start:YouTube.EventResponse.Event.yt_navigate_start) => void
+        create: (videoid:YouTube.Iframe.src.videoid, callback?:Function) => void
+        prepare: (yt_navigate_start:YouTube.EventResponse.Event.yt_navigate_start, callback?:Function) => void
         preparation: {
           preserve: (yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish) => void
           cancel: (yt_navigate_finish?:YouTube.EventResponse.Event.yt_navigate_finish) => void
         },
+        keep: (videoid:YouTube.Iframe.src.videoid) => void
         remove: () => void
+
+      }
+
+    }
+
+    namespace mute {
+
+      interface Module {
+
+        enable: () => void
+        disable: () => void
 
       }
 
