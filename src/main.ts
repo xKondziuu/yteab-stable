@@ -20,7 +20,11 @@ const regex: main.Regex = {
  */
 const yteabelem: main.Yteabelem = {
   watch: {
-    iframe: () => document.querySelector('ytd-player iframe#yteab'),
+    iframe: {
+      any: () => document.querySelector('ytd-player iframe#yteab'),
+      id: (videoid:YouTube.Iframe.src.videoid) => document.querySelector(`ytd-player iframe#yteab[data-yteab="${btoa(videoid)}"]`)
+    },
+    iframes: () => document.querySelectorAll('ytd-player iframe#yteab')
   }
 }
 

@@ -23,7 +23,11 @@ declare namespace main {
 
   interface Yteabelem {
     watch: {
-      iframe: () => HTMLIFrameElement | null
+      iframe: {
+        any: () => HTMLIFrameElement | null
+        id: (videoid:YouTube.Iframe.src.videoid) => HTMLIFrameElement | null
+      }
+      iframes: () => NodeListOf<HTMLIFrameElement> | null
     }
   }
 
