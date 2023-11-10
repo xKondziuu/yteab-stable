@@ -45,6 +45,13 @@ const ytelem: main.Ytelem = {
 }
 
 
+const ytif: main.Ytif = {
+  watch: {
+    adplaying: () => (ytelem.watch.player()?.classList.contains('.ad-showing') || ytelem.watch.player()?.classList.contains('.ad-interrupting'))
+  }
+}
+
+
 logger.debug.loaded('main.ts')
 
-export {regex, yteabelem, ytelem}
+export {regex, yteabelem, ytelem, ytif}

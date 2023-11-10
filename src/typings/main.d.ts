@@ -31,4 +31,10 @@ declare namespace main {
     }
   }
 
+  interface Ytif {
+    watch: {
+      adplaying: () => boolean|undefined
+    }
+  }
+
 }
