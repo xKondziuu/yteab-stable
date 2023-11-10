@@ -85,6 +85,10 @@ declare namespace inject {
 
       interface Module {
 
+        safestart: (yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish, rate?:number) => void
+        startnow: (rate:number) => void
+        stop: () => void
+
       }
 
     }

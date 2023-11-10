@@ -1,5 +1,6 @@
 import inject from '..'
 import { logger } from '../../logger'
+import { ytelem, ytif } from '../../main'
 
 
 /**
@@ -10,7 +11,17 @@ import { logger } from '../../logger'
  */
 export const sync: inject.watch.sync.Module = {
 
+  safestart(yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish, rate?:number) {
 
+  },
+
+  startnow(rate:number) {
+
+  },
+
+  stop() {
+
+  }
 
 }
 
