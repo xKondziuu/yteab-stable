@@ -44,7 +44,15 @@ export const logger: logger.Module = {
      */
     loaded(path:string): void {
       if (dev.logger && dev.debug) console.log(`[${prefix}] - DEBUG: /src/${String(path)} loaded!`)
-    }
+    },
+
+    /**
+     * Wysyłanie wiadomości log widocznej tylko w trybie debugowania
+     * @param {string} message - Wiadomość do wysłania do konsoli
+     */
+    log(message:string): void {
+      if (dev.logger) console.log(`[${prefix}] - DEBUG: ${String(message)}`)
+    },
 
   }
 

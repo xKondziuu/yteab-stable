@@ -8,6 +8,7 @@ declare namespace logger {
 
     debug: {
       loaded: (path:string) => void
+      log: (message:string) => void
     }
 
   }
