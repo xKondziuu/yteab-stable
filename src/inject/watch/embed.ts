@@ -4,6 +4,7 @@ import { logger } from '../../logger'
 import { ytelem, yteabelem } from '../../main'
 import { urlparams } from '../urlparams'
 import { mute } from './mute'
+import { sync } from './sync'
 
 
 /**
@@ -109,7 +110,7 @@ export const embed: inject.watch.embed.Module = {
     /**
      * Funkcja, która zachowuje element <iframe> przygotowany wcześniej przez funkcję prepare(yt_navigate_start),
      * następnie modyfikuje zawartość <iframe> tak, aby przypominał standardowy odtwarzacz, na koniec pokazuje
-     * domyślnie ukryty element <iframe> i w zależności od wideo po 4 sekundach próbuje uruchamić funkcję sync().
+     * domyślnie ukryty element <iframe> i uruchamia funkcję sync.safestart(yt_navigate_finish, delay, rate)
      * @param {Event|unknown} yt_navigate_finish - Objekt event zwracany przez addEventListener po wywołaniu eventu yt-navigate-finish
      * @see /src/inject/events.ts run(listener, event?)
      * @see /src/inject/watch/sync.ts
@@ -133,6 +134,9 @@ export const embed: inject.watch.embed.Module = {
         /** Pokazujemy <iframe> */
         iframe.style.display = 'block'
 
+        /** Uruchamiamy synchronizację w sposób bezpieczny */
+        sync.safestart(yt_navigate_finish)
+
       }
 
     },
@@ -152,6 +156,9 @@ export const embed: inject.watch.embed.Module = {
 
       // wyłączamy wyciszenie
       mute.disable()
+
+      // zatrzymujemy synchronizację
+      sync.stop()
 
     }
 
@@ -198,6 +205,9 @@ export const embed: inject.watch.embed.Module = {
         yteabelem.watch.iframes()?.forEach((iframe) => {
           iframe.remove()
         })
+
+        /** Zatrzymujemy synchronizację */
+        sync.stop()
 
       } catch (error) {
 
