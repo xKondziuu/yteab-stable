@@ -113,7 +113,7 @@ export const embed: inject.watch.embed.Module = {
      * domyślnie ukryty element <iframe> i uruchamia funkcję sync.safestart(yt_navigate_finish, delay, rate)
      * @param {Event|unknown} yt_navigate_finish - Objekt event zwracany przez addEventListener po wywołaniu eventu yt-navigate-finish
      * @see /src/inject/events.ts run(listener, event?)
-     * @see /src/inject/watch/sync.ts
+     * @see /src/inject/watch/sync.ts safestart(yt_navigate_finish, delay, rate)
      */
     preserve(yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish) {
 
@@ -146,6 +146,7 @@ export const embed: inject.watch.embed.Module = {
      * dodatkowo wyłącza wcześniej załączony interval cały czas wyciszający <video> na youtube.
      * @param {Event|unknown} [yt_navigate_finish] - Objekt event zwracany przez addEventListener po wywołaniu eventu yt-navigate-finish
      * @see /src/inject/events.ts run(listener, event?)
+     * @see /src/inject/watch/sync.ts stop()
      */
     cancel(yt_navigate_finish?:YouTube.EventResponse.Event.yt_navigate_finish) {
 
