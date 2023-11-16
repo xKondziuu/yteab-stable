@@ -82,26 +82,30 @@ export const sync: inject.watch.sync.Module = {
 
       let embedvid:HTMLVideoElement|null = embedDOM.querySelector('video')
 
-      if (!ytif.watch.adplaying() && mainvid && embed && embedDOM && embedvid) {
+      if (!ytif.watch.adplaying()) {
 
-        mainvid.pause()
+        if (mainvid && embed && embedDOM && embedvid) {
 
-        if (dev.debug) {
+          mainvid.pause()
 
-          const maintime = Number( mainvid.currentTime.toFixed(3) )
-          const embedtime = Number( embedvid.currentTime.toFixed(3) )
-          const deltatime = Number( Math.abs(embedtime - maintime).toFixed(3) )
-          const loss = Number( ((deltatime / mainvid.duration) * 100).toFixed(3) )
+          if (dev.debug) {
 
-          logger.debug.log(`Sync - main: ${maintime.toFixed(2)}, embed: ${embedtime.toFixed(2)}, delta: ${deltatime.toFixed(2)}, loss: ${loss}%`)
+            const maintime = Number( mainvid.currentTime.toFixed(3) )
+            const embedtime = Number( embedvid.currentTime.toFixed(3) )
+            const deltatime = Number( Math.abs(embedtime - maintime).toFixed(3) )
+            const loss = Number( ((deltatime / mainvid.duration) * 100).toFixed(3) )
+
+            logger.debug.log(`Sync - main: ${maintime.toFixed(2)}, embed: ${embedtime.toFixed(2)}, delta: ${deltatime.toFixed(2)}, loss: ${loss}%`)
+
+          }
+
+          mainvid.currentTime = embedvid.currentTime
+
+        } else {
+
+          sync.stop()
 
         }
-
-        mainvid.currentTime = embedvid.currentTime
-
-      } else {
-
-        sync.stop()
 
       }
 
