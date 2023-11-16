@@ -10,10 +10,21 @@ import { logger } from '../logger'
  */
 export const urlparams: inject.urlparams.Module = {
 
+  /**
+   * Funkcja, która pozyskuje parametry z window.location.search,
+   * przetwarza oraz zwraca je w postaci konstrukcji URLSearchParams.
+   * @returns {URLSearchParams} - Konstrukcja z odpowiednio przetworzonymi danymi z window.location.search
+   */
   current() {
     return new URLSearchParams(window.location.search)
   },
 
+  /**
+   * Funkcja starająca się przetwarzyć parametry w postaci "window.location.search"
+   * pozyskane ze stringa oraz zwracająca je w postaci konstrukcji URLSearchParams.
+   * @param {string} params - Parametry w postaci stringa do przetworzenia
+   * @returns {URLSearchParams} - Konstrukcja z odpowiednio przetworzonymi danymi ze stringa
+   */
   custom(params) {
     return new URLSearchParams(params)
   }
