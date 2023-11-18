@@ -2,6 +2,7 @@ import inject from '.'
 import { logger } from '../logger'
 import { embed } from './watch/embed'
 import { yteabelem } from '../main'
+import { mute } from './watch/mute'
 
 
 /**
@@ -135,6 +136,9 @@ export const events: inject.events.Module = {
 
           // jeśli typ strony do załadowania to 'watch'
           if (data.detail.pageType == 'watch') {
+
+            /** Wyciszamy wideo najszybciej jak to możliwe */
+            mute.enable()
 
             /**
              * Przygotowujemy (wstępnie tworzymy) ramkę, po wywołaniu eventu yt-navigate-finish

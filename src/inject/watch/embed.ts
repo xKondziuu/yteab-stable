@@ -207,8 +207,11 @@ export const embed: inject.watch.embed.Module = {
           iframe.remove()
         })
 
-        /** Zatrzymujemy synchronizację */
+        // zatrzymujemy synchronizację
         sync.stop()
+
+        // wyłączamy wyciszenie
+        mute.disable()
 
       } catch (error) {
 
