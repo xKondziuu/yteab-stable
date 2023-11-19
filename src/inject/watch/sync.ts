@@ -84,6 +84,8 @@ export const sync: inject.watch.sync.Module = {
     clearTimeout(syncDelay)
     clearInterval(syncInterval)
 
+    ytelem.watch.player()?.classList.add('yteab-sync')
+
     /**
      * Główny timeout synchronizacji - syncInterval, którego najważniejszym
      * zadaniem jest synchronizacja czasu, wartości currentTime, wideo z embed.
@@ -124,7 +126,7 @@ export const sync: inject.watch.sync.Module = {
             const loss = Number( ((deltatime / mainvid.duration) * 100).toFixed(3) )  // procent pominiętego wideo, które nie musiało pobrane
 
             // logowanie wszystkich obliczonych wartości
-            logger.debug.log(`Sync - main: ${maintime.toFixed(2)}, embed: ${embedtime.toFixed(2)}, delta: ${deltatime.toFixed(2)}, loss: ${loss}%`)
+            logger.debug.log(`Synchronization - main: ${maintime.toFixed(2)}, embed: ${embedtime.toFixed(2)}, delta: ${deltatime.toFixed(2)}, loss: ${loss}%`)
 
           }
 
@@ -153,7 +155,11 @@ export const sync: inject.watch.sync.Module = {
     clearTimeout(syncDelay)
     clearInterval(syncInterval)
 
-    logger.log('Synchronization stopped')
+    if (ytelem.watch.player()?.classList.contains('yteab-sync')) {
+      logger.log('Synchronization stopped')
+    }
+
+    ytelem.watch.player()?.classList.remove('yteab-sync')
 
   }
 
