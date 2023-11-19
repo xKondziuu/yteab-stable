@@ -86,7 +86,22 @@ declare namespace inject {
 
       interface Module {
 
+        translate: (qualitylabel:YouTube.qualityLabel) => YouTube.quality|null
+        main: {
+          init: () => void
+          get: () => YouTube.quality|null
+          getrawcookie: (parse?:boolean) => YouTube.Cookie.scheme|string|null
+          getcookie: () => YouTube.quality|null
+          set: (desiredquality:YouTube.qualityLabel, callback?:Function) => void
+          setcookie: (desiredquality:YouTube.qualityLabel) => void
+          setrawcookie: (cookie:YouTube.Cookie.scheme) => void
+          setonce: (desiredquality:YouTube.qualityLabel) => void
+        }
 
+        embed: {
+          init: (videoid?:YouTube.Iframe.src.videoid|null) => void
+          get: (videoid?:YouTube.Iframe.src.videoid|null) => YouTube.quality|null
+        }
 
       }
 
