@@ -15,6 +15,7 @@ declare namespace inject {
       watch: {
         embed: inject.watch.embed.Module
         mute: inject.watch.mute.Module
+        quality: inject.watch.quality.Module
         sync: inject.watch.sync.Module
       }
 
@@ -76,6 +77,16 @@ declare namespace inject {
 
         enable: () => void
         disable: () => void
+
+      }
+
+    }
+
+    namespace quality {
+
+      interface Module {
+
+
 
       }
 
