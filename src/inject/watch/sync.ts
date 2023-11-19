@@ -2,6 +2,7 @@ import inject from '..'
 import * as dev from '../../dev.json'
 import { logger } from '../../logger'
 import { yteabelem, ytelem, ytif } from '../../main'
+import { quality } from './quality'
 
 
 var syncDelay:number, syncInterval:number
@@ -23,7 +24,7 @@ export const sync: inject.watch.sync.Module = {
    * @param {number} [rate=3] - Wartość (w sekundach) określająca delay interwału synchronizacji wideo, domyślna wartość 4 sekundy
    * @see /src/inject/watch/embed.ts preparation.preserve(yt_navigate_finish)
    */
-  safestart(yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish, delay:number = 1, rate:number = 3) {
+  safestart(yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish, delay:number = 1, rate:number = 2) {
 
     /** Pobieramy dane odpowiedzi eventu */
     const response = yt_navigate_finish.detail.response
@@ -52,6 +53,9 @@ export const sync: inject.watch.sync.Module = {
 
         // stosując try{} unikamy ewentualnych problemów z funkcją startnow(rate, videoid)
         try {
+
+          /** Zmieniamy rodzielczość głównego wideo na SD w celu oszczędzania zasobów */
+          quality.main.setonce('360p')
 
           /** Rozpoczynamy synchronizację, rate przepisujemy z góry i dodajemy uzyskane id wideo */
           sync.startnow(rate, videoid)
@@ -129,6 +133,12 @@ export const sync: inject.watch.sync.Module = {
             logger.debug.log(`Synchronization - main: ${maintime.toFixed(2)}, embed: ${embedtime.toFixed(2)}, delta: ${deltatime.toFixed(2)}, loss: ${loss}%`)
 
           }
+
+          /**
+           * Wideo czasami przewija się do końca w wyniku błędu synchronizacji, aby wyeliminować ten problem,
+           * jeśli wideo zostało zakończone, automatycznie cofamy do początku i odtwarzamy je ponownie.
+           */
+          if (mainvid.ended) mainvid.play()
 
           /** Synchronizacja czasu, wartości currentTime, głównego wideo do embed */
           mainvid.currentTime = embedvid.currentTime
