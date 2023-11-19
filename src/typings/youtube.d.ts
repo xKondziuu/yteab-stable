@@ -4,7 +4,31 @@ declare namespace YouTube {
   type audioQuality = 'AUDIO_QUALITY_LOW'|'AUDIO_QUALITY_MEDIUM'|'AUDIO_QUALITY_HIGH'
   type quality = 'tiny'|'small'|'medium'|'large'|'hd720'|'hd1080'|'hd1440'|'hd2160'|'hd2880'|'hd4320'
   type qualityLabel = '144p'|'240p'|'360p'|'480p'|'720p'|'1080p'|'1440p'|'2160p'|'2880p'|'4320p'
+  type qualityNumber = 144|240|360|480|720|1080|1440|2160|2880|4320
   type fps = 25|30|48|50|60
+
+  namespace Cookie {
+
+    interface scheme {
+
+      data: string|data.quality
+      expiration: number
+      creation: number
+
+    }
+
+    namespace data {
+
+      interface quality {
+
+        quality: qualityNumber
+        previousQuality: qualityNumber
+
+      }
+
+    }
+
+  }
 
   namespace Iframe {
 
