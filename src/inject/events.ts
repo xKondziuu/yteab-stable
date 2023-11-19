@@ -1,4 +1,5 @@
 import inject from '.'
+import * as dev from '../dev.json'
 import { logger } from '../logger'
 import { embed } from './watch/embed'
 import { yteabelem } from '../main'
@@ -107,6 +108,19 @@ export const events: inject.events.Module = {
 
               // jeśli warunki nie zostały spełnione, anulujemy przygotowanie ramki
               logger.log('Video overwrite not possible')
+
+              /**
+               * Opcjonalne logowanie szczegółów w konsoli przy każdej synchronizacji,
+               * dostępne tylko przy trybie debugowania w celu oszczędzania zasobów.
+               */
+              if (dev.debug) {
+                if (response.playerResponse.playabilityStatus.status != 'OK') logger.debug.warn('Overwrite failed - Playability status: '+response.playerResponse.playabilityStatus.status)
+                if (!response.playerResponse.playabilityStatus.playableInEmbed) logger.debug.warn('Overwrite failed - Video is not playable in embed')
+                if (response.playerResponse.videoDetails.isOwnerViewing) logger.debug.warn('Overwrite failed - Video is viewed by owner')
+                if (response.playerResponse.videoDetails.isPrivate) logger.debug.warn('Overwrite failed - Video is private')
+                if (response.playerResponse.videoDetails.isLiveContent) logger.debug.warn('Overwrite failed - Video is live content')
+              }
+
               embed.preparation.cancel(data)
 
             }
