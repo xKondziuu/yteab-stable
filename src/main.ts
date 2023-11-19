@@ -40,7 +40,13 @@ const ytelem: main.Ytelem = {
     player_container: () => document.querySelector('ytd-player div#container'),
     player: () => document.querySelector('ytd-player div#movie_player'),
     video_container: () => document.querySelector('ytd-player div.html5-video-container'),
-    video: () => document.querySelector('ytd-player div.html5-video-container video')
+    video: () => document.querySelector('ytd-player div.html5-video-container video'),
+    settings: {
+      button: () => document.querySelector('ytd-player .ytp-chrome-controls .ytp-settings-button'),
+      menu: () => document.querySelector('ytd-player .ytp-settings-menu > .ytp-panel > div'),
+      quality: () => document.querySelector('ytd-player .ytp-settings-menu > .ytp-panel > div > div:last-child'),
+      qualities: () => document.querySelectorAll('.ytp-quality-menu .ytp-menuitem > .ytp-menuitem-label > div > span')
+    }
   }
 }
 
