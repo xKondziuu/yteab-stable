@@ -74,7 +74,7 @@ export const embed: inject.watch.embed.Module = {
 
     // sprawdzamy czy wszystko przebiegło zgodnie z planem
     if (yteabelem.watch.iframe.id(videoid)) {
-      logger.log('Iframe rendered successfully!')
+      logger.log('Iframe rendering finished')
       if (callback) callback()
     } else {
       logger.error('Unable to create iframe')
@@ -98,7 +98,6 @@ export const embed: inject.watch.embed.Module = {
 
     /** Tworzymy (przygotowujemy) element <iframe> */
     embed.create(videoid, ()=>{
-      logger.log('Ready for further instructions')
       mute.enable() // wyciszamy wideo
       if (callback) callback()
     })

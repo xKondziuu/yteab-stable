@@ -77,7 +77,7 @@ export const events: inject.events.Module = {
               response.playerResponse.videoDetails.isLiveContent == false      // czy to transmisja live
             ) {
 
-              logger.log('Video overwrite possible')
+              logger.log('Video overwrite possible!')
 
               /** Pobieramy ID wczytanego wideo */
               const videoid: YouTube.Iframe.src.videoid = response.endpoint.watchEndpoint.videoId
@@ -107,7 +107,7 @@ export const events: inject.events.Module = {
             } else {
 
               // jeśli warunki nie zostały spełnione, anulujemy przygotowanie ramki
-              logger.log('Video overwrite not possible')
+              logger.log('Video overwrite NOT possible!')
 
               /**
                * Opcjonalne logowanie szczegółów w konsoli przy każdej synchronizacji,
