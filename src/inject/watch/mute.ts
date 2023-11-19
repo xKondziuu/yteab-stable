@@ -20,6 +20,11 @@ export const mute: inject.watch.mute.Module = {
    */
   enable() {
 
+    /** Gdy jest zmutowane anulujemy */
+    if (ytelem.watch.player()?.classList.contains('yteab-mute')) return
+
+    ytelem.watch.player()?.classList.add('yteab-mute')
+
     // tworzymy interval
     muteInterval = setInterval(()=>{
 
@@ -42,16 +47,21 @@ export const mute: inject.watch.mute.Module = {
    */
   disable() {
 
+    /** Gdy nie jest zmutowane anulujemy */
+    if (!ytelem.watch.player()?.classList.contains('yteab-mute')) return
+
     // pobieramy główny element <video>
     let video = ytelem.watch.video()
 
     // usuwamy interval jeśli jest
-    if (muteInterval) clearInterval(muteInterval)
+    clearInterval(muteInterval)
 
     // odciszamy jeśli można
     if (video && video.muted) video.muted = false
 
     logger.log('Main video unmuted')
+
+    ytelem.watch.player()?.classList.remove('yteab-mute')
 
   }
 
