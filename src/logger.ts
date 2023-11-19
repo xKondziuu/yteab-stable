@@ -54,6 +54,14 @@ export const logger: logger.Module = {
       if (dev.logger) console.log(`[${prefix}] - DEBUG: ${String(message)}`)
     },
 
+    /**
+     * Wysyłanie wiadomości z ostrzeżeniem widocznej tylko w trybie debugowania
+     * @param {string} message - Wiadomość do wysłania do konsoli
+     */
+    warn(message:string): void {
+      if (dev.logger) console.warn(`[${prefix}] - DEBUG: ${String(message)}`)
+    }
+
   }
 
 }
