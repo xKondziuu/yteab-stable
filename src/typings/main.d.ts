@@ -18,6 +18,12 @@ declare namespace main {
       player: () => HTMLDivElement | null
       video_container: () => HTMLDivElement | null
       video: () => HTMLVideoElement | null
+      settings: {
+        button: () => HTMLButtonElement | null
+        menu: () => HTMLDivElement | null
+        quality: () => HTMLDivElement | null
+        qualities: () => NodeListOf<HTMLSpanElement> | null
+      }
     }
   }
 
