@@ -3,6 +3,7 @@ import { logger } from '../logger'
 import { embed as module_embed } from './watch/embed'
 import { events as module_events } from './events'
 import { logger as module_logger } from '../logger'
+import { modify as module_modify } from './watch/modify'
 import { mute as module_mute } from './watch/mute'
 import { quality as module_quality } from './watch/quality'
 import { sync as module_sync } from './watch/sync'
@@ -22,6 +23,7 @@ const inject: inject.index.Module = {
 
   watch: {
     embed: module_embed,
+    modify: module_modify,
     mute: module_mute,
     quality: module_quality,
     sync: module_sync

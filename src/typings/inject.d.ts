@@ -14,6 +14,7 @@ declare namespace inject {
 
       watch: {
         embed: inject.watch.embed.Module
+        modify: inject.watch.modify.Module
         mute: inject.watch.mute.Module
         quality: inject.watch.quality.Module
         sync: inject.watch.sync.Module
@@ -66,6 +67,16 @@ declare namespace inject {
         },
         keep: (videoid:YouTube.Iframe.src.videoid) => void
         remove: () => void
+
+      }
+
+    }
+
+    namespace modify {
+
+      interface Module {
+
+
 
       }
 
