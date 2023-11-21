@@ -77,7 +77,7 @@ declare namespace inject {
       interface Module {
 
         safe: (yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish) => void
-        now: (videoid?:YouTube.Iframe.src.videoid|null) => void
+        now: (videoid?:YouTube.Iframe.src.videoid, callback?:Function) => void
 
       }
 
