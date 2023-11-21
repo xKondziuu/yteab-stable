@@ -3,6 +3,7 @@ import { name } from '../../../package.json'
 import { logger } from '../../logger'
 import { ytelem, yteabelem } from '../../main'
 import { urlparams } from '../urlparams'
+import { modify } from './modify'
 import { mute } from './mute'
 import { sync } from './sync'
 
@@ -129,6 +130,9 @@ export const embed: inject.watch.embed.Module = {
 
         /** Pozostawiamy <iframe> który zawiera wideo o tym id */
         embed.keep(videoid)
+
+        /** Modyfikujemy zawartość ramki w sposób bezpieczny */
+        modify.safe(yt_navigate_finish)
 
         /** Pokazujemy <iframe> */
         iframe.style.display = 'block'
