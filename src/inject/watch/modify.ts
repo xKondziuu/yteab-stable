@@ -11,6 +11,11 @@ import { yteabelem } from '../../main'
  */
 export const modify: inject.watch.modify.Module = {
 
+  /**
+   * Funkcja uruchamiająca funkcję modyfikacji (manipulacji) w sposób bezpieczny, dzięki dodatkowemu pozyskaniu odpowiedzi
+   * z eventu yt-navigate-finish sprawdzamy wiele rzeczy m.in. długość, obecność wideo i po ich potwierdzeniu kontynuujemy.
+   * @param {Event|unknown} yt_navigate_finish - Objekt event zwracany przez addEventListener po wywołaniu eventu yt-navigate-finish
+   */
   safe(yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish): void {
 
     /** Pobieramy dane odpowiedzi eventu */
@@ -33,6 +38,7 @@ export const modify: inject.watch.modify.Module = {
       // stosując try{} unikamy ewentualnych problemów z funkcją now(videoid)
       try {
 
+        /** Modyfikujemy (manipulujemy) zawartość ramki */
         modify.now(videoid, ()=>{
           logger.log('Frame content successfully manipulated')
         })
@@ -47,6 +53,13 @@ export const modify: inject.watch.modify.Module = {
 
   },
 
+  /**
+   * Funkcja modyfikująca (manipulująca) zawartość ramki natychmiast po wywołaniu funkcji, wybrane elementy
+   * są usuwane lub ukrywane, są też dodawane lub usuwane klasy w celu zmiany ich domyślnych wartości css.
+   * @param {string} [videoid] - ID wideo na YouTube do odnalezienia ramki, bez niego jest używana dowolna
+   * @param {Function} [callback] - Funkcja wywoływana gdy sukces
+   * @returns
+   */
   now(videoid?:YouTube.Iframe.src.videoid, callback?:Function): void {
 
     // pozyskujemy ramkę, jeśli mamy id wideo to po id, a jeśli nie mamy to dowolną
@@ -56,6 +69,7 @@ export const modify: inject.watch.modify.Module = {
     var embedDOM:Document|undefined = embed?.contentWindow?.document
     if (!embedDOM) return
 
+    /** Modyfikacja klas głównego elementu odtwarzacza */
     let playerElement:HTMLDivElement|null = embedDOM.querySelector('#movie_player')
     if (playerElement) {
       playerElement.classList.remove('ytp-embed')
@@ -63,23 +77,27 @@ export const modify: inject.watch.modify.Module = {
       playerElement.classList.add('yteab-embed')
     }
 
+    /** Elementy do usunięcia */
     let elementsToRemove:string[] = [
       '.ytp-chrome-top',
       '.ytp-gradient-top',
       '.ytp-more-videos-view',
     ]
 
+    /** Elementy do ukrycia */
     let elementsToHide:string[] = [
       '.ytp-pause-overlay',
       '.ytp-pause-overlay-container',
       '.ytp-youtube-button'
     ]
 
+    // usuwamy wszystkie elementy wymienione powyżej
     for (let selector of elementsToRemove) {
       let element:HTMLElement|null = embedDOM.querySelector(<string>selector)
       if (element) element.remove()
     }
 
+    // ukrywamy wszystkie elementy wymienione powyżej
     for (let selector of elementsToHide) {
       let element:HTMLElement|null = embedDOM.querySelector(<string>selector)
       if (element) {
@@ -87,6 +105,10 @@ export const modify: inject.watch.modify.Module = {
       }
     }
 
+    /**
+     * Jeśli poprawnie odnaleziono element odtwarzacza oraz nadano mu klasę,
+     * oznacza to że prawdopodobnie powyższe zadana zostały wykonane poprawnie.
+     */
     if (playerElement && playerElement.classList.contains('yteab-embed')) {
       if (callback) callback()
     }
