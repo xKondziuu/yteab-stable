@@ -138,6 +138,9 @@ export const embed: inject.watch.embed.Module = {
         /** Modyfikujemy zawartość ramki w sposób bezpieczny */
         modify.safe(yt_navigate_finish)
 
+        /** Przenosimy focus na ramkę */
+        embed.focus(videoid)
+
         /** Pokazujemy <iframe> */
         iframe.style.display = 'block'
 
@@ -197,6 +200,22 @@ export const embed: inject.watch.embed.Module = {
       logger.error('Unable find iframe to keep')
 
     }
+
+  },
+
+  /**
+   * Funkcja która ustawia focus na stworzonej ramce, domyślnie focus jest ustawiony na głównym wideo,
+   * przenosimy focus w celu nasłuchiwania imputów z klawiatury i ignorowania ich na głównym wideo.
+   * @param {string} [videoid] - ID wideo na YouTube do odnalezienia ramki, bez niego jest używana dowolna
+   */
+  focus(videoid?:YouTube.Iframe.src.videoid) {
+
+    // pozyskujemy ramkę, jeśli mamy id wideo to po id, a jeśli nie mamy to dowolną, nie kontynuujemy bez
+    let embed = videoid ? yteabelem.watch.iframe.id(videoid) : yteabelem.watch.iframe.any()
+    if (!embed) return
+
+    /** Zfocusowanie elementu */
+    embed.focus()
 
   },
 

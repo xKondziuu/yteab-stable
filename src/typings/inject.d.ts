@@ -66,6 +66,7 @@ declare namespace inject {
           cancel: (yt_navigate_finish?:YouTube.EventResponse.Event.yt_navigate_finish) => void
         },
         keep: (videoid:YouTube.Iframe.src.videoid) => void
+        focus: (videoid?:YouTube.Iframe.src.videoid) => void
         remove: () => void
 
       }
