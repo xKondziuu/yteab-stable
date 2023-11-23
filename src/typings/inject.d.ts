@@ -104,7 +104,7 @@ declare namespace inject {
           get: () => YouTube.quality|null
           getrawcookie: (parse?:boolean) => YouTube.Cookie.scheme|string|null
           getcookie: () => YouTube.quality|null
-          set: (desiredquality:YouTube.qualityLabel, callback?:Function) => void
+          set: (desiredquality:YouTube.qualityLabel, quiet?:boolean, callback?:Function) => void
           setcookie: (desiredquality:YouTube.qualityLabel) => void
           setrawcookie: (cookie:YouTube.Cookie.scheme) => void
           setonce: (desiredquality:YouTube.qualityLabel) => void

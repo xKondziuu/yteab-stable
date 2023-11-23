@@ -1,4 +1,5 @@
 import inject from '..'
+import * as dev from '../../dev.json'
 import { name } from '../../../package.json'
 import { logger } from '../../logger'
 import { ytelem, yteabelem } from '../../main'
@@ -75,7 +76,7 @@ export const embed: inject.watch.embed.Module = {
 
     // sprawdzamy czy wszystko przebiegło zgodnie z planem
     if (yteabelem.watch.iframe.id(videoid)) {
-      logger.log('Iframe rendering finished')
+      logger.debug.log('Iframe rendering finished')
       if (callback) callback()
     } else {
       logger.error('Unable to create iframe')
@@ -92,7 +93,10 @@ export const embed: inject.watch.embed.Module = {
    */
   prepare(yt_navigate_start:YouTube.EventResponse.Event.yt_navigate_start, callback?:Function): void {
 
-    logger.log('Preparing video iframe...')
+    logger.debug.log('Preparing video iframe...')
+
+    // dodajemy do odtwarzacza klasę do zmiany css
+    ytelem.watch.player()?.classList.add('yteab-playing')
 
     /** Pobieramy id wideo które użytkownik chce załadować */
     const videoid: YouTube.Iframe.src.videoid = yt_navigate_start.detail.endpoint.watchEndpoint.videoId
@@ -126,7 +130,7 @@ export const embed: inject.watch.embed.Module = {
       // sprawdzamy czy istnieje
       if (iframe) {
 
-        logger.log('Keeping prepared iframe')
+        logger.dlog('Keeping prepared render', 'Keeping prepared iframe')
 
         /** Pozostawiamy <iframe> który zawiera wideo o tym id */
         embed.keep(videoid)
@@ -153,10 +157,13 @@ export const embed: inject.watch.embed.Module = {
      */
     cancel(yt_navigate_finish?:YouTube.EventResponse.Event.yt_navigate_finish) {
 
-      logger.log('Canceling prepared iframe')
+      logger.dlog('Canceling prepared render', 'Canceling prepared iframe')
 
       // dla pewności usuwamy wszystkie ramki
       embed.remove()
+
+      // usuwamy z odtwarzacza klasę do zmiany css
+      ytelem.watch.player()?.classList.remove('yteab-playing')
 
       // wyłączamy wyciszenie
       mute.disable()
@@ -222,7 +229,7 @@ export const embed: inject.watch.embed.Module = {
 
       } finally {
 
-        logger.log('All existing iframes removed')
+        logger.dlog('Restored youtube defaults', 'All existing iframes removed')
 
       }
 

@@ -36,7 +36,7 @@ export const mute: inject.watch.mute.Module = {
 
     }, 1)
 
-    logger.log('Main video muted')
+    logger.debug.log('Main video muted')
 
   },
 
@@ -59,7 +59,7 @@ export const mute: inject.watch.mute.Module = {
     // odciszamy jeśli można
     if (video && video.muted) video.muted = false
 
-    logger.log('Main video unmuted')
+    logger.debug.log('Main video unmuted')
 
     ytelem.watch.player()?.classList.remove('yteab-mute')
 

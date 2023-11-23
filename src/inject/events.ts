@@ -40,7 +40,7 @@ export const events: inject.events.Module = {
     } catch (error) {
       logger.error(`Unable to listen ${listener}:\n${error}`)
     } finally {
-      logger.log(`Listening for event: ${listener}`)
+      logger.debug.log(`Listening for event: ${listener}`)
     }
 
   },
@@ -150,6 +150,8 @@ export const events: inject.events.Module = {
 
           // jeśli typ strony do załadowania to 'watch'
           if (data.detail.pageType == 'watch') {
+
+            logger.log(`Processing video '${data.detail.endpoint.watchEndpoint.videoId}'`)
 
             /** Wyciszamy wideo najszybciej jak to możliwe */
             mute.enable()

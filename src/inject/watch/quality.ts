@@ -170,9 +170,10 @@ export const quality: inject.watch.quality.Module = {
      * UWAGA! Działa tylko jeśli jakość nie była wcześniej zmodyfikowana przez inny skrypt!
      * Note: Ustawienie jakości tą funkcją zamieni też jakość preferowaną w window.localStorage
      * @param {YouTube.qualityLabel} desiredquality - Pożądana jakość wideo w formacie qualityLabel
+     * @param {boolean} [quiet=false] - Czy wywołanie funkcji ma nie zwracać logu w konsoli
      * @param {Function} [callback] - Funkcja wywoływana gdy sukces
      */
-    set(desiredquality:YouTube.qualityLabel, callback?:Function): void {
+    set(desiredquality:YouTube.qualityLabel, quiet:boolean = false, callback?:Function): void {
 
       // uzyskujemy dostęp do ustawień
       this.init()
@@ -213,7 +214,7 @@ export const quality: inject.watch.quality.Module = {
 
             if (button) {
               button.click()  // kilkamy i ustawiamy jakość
-              logger.log('Main video quality changed to: '+desiredquality)
+              if (!quiet) logger.log('Main video quality changed to: '+desiredquality)
               if (callback) (callback())
             } else {
               logger.error('Unable to change main video quality to '+desiredquality)
@@ -287,10 +288,12 @@ export const quality: inject.watch.quality.Module = {
       let cookieraw = this.getrawcookie() as string
 
       /** Ustawiamy pożądaną jakość wideo */
-      this.set(desiredquality, ()=>{
+      this.set(desiredquality, true, ()=>{
 
         // przywracamy rekord jakości window.localStorage
         this.setrawcookie(JSON.parse(cookieraw))
+
+        logger.dlog('Adjusted video quality', `Main video quality changed once to: ${desiredquality}`)
 
       })
 
