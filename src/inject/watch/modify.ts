@@ -40,7 +40,7 @@ export const modify: inject.watch.modify.Module = {
 
         /** Modyfikujemy (manipulujemy) zawartość ramki */
         modify.now(videoid, ()=>{
-          logger.log('Frame content successfully manipulated')
+          logger.dlog('Adjusted player content', 'Frame content successfully manipulated')
         })
 
       } catch (error) {
@@ -81,11 +81,16 @@ export const modify: inject.watch.modify.Module = {
     let elementsToRemove:string[] = [
       '.ytp-chrome-top',
       '.ytp-gradient-top',
-      '.ytp-more-videos-view',
+      '.ytp-more-videos-view'
     ]
 
     /** Elementy do ukrycia */
     let elementsToHide:string[] = [
+      '.ytp-chrome-top',
+      '.ytp-contextmenu .ytp-panel-menu > .ytp-menuitem:first-child',
+      '.ytp-contextmenu .ytp-collapse',
+      '.ytp-gradient-top',
+      '.ytp-more-videos-view',
       '.ytp-pause-overlay',
       '.ytp-pause-overlay-container',
       '.ytp-youtube-button'
@@ -104,6 +109,12 @@ export const modify: inject.watch.modify.Module = {
         element.style.display = 'none'
       }
     }
+
+    // dodatkowo dodajemy <style> ukrycia elementów
+    let stylehide = embedDOM.createElement('style')
+    stylehide.innerHTML = `${elementsToHide.toString()} {display: none!important}`
+    stylehide.className = 'yteab-style-hide'
+    embedDOM.body.appendChild(stylehide)
 
     /**
      * Jeśli poprawnie odnaleziono element odtwarzacza oraz nadano mu klasę,
