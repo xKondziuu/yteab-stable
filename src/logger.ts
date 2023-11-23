@@ -36,6 +36,22 @@ export const logger: logger.Module = {
     if (dev.logger) console.warn(`[${prefix}] - ${String(message)}`)
   },
 
+  /**
+   * Wysyłanie wiadomości log która różni się w zależności od tego czy tryb debug jest włączony.
+   * Funkcja przyjmuje dwa argumenty - dla wiadomości zwykłej oraz wiadomości dla trybu debug.
+   * @param {string} message - Wiadomość do wysłania do konsoli gdy debug wyłączony
+   * @param {string} messageDebug - Wiadomość do wysłania do konsoli gdy debug włączony
+   */
+  dlog(message:string, messageDebug:string) {
+    if (dev.logger) {
+      if (dev.debug) {
+        logger.debug.log(messageDebug)
+      } else {
+        logger.log(message)
+      }
+    }
+  },
+
   debug: {
 
     /**
@@ -51,7 +67,7 @@ export const logger: logger.Module = {
      * @param {string} message - Wiadomość do wysłania do konsoli
      */
     log(message:string): void {
-      if (dev.logger) console.log(`[${prefix}] - DEBUG: ${String(message)}`)
+      if (dev.logger && dev.debug) console.log(`[${prefix}] - DEBUG: ${String(message)}`)
     },
 
     /**
@@ -59,7 +75,7 @@ export const logger: logger.Module = {
      * @param {string} message - Wiadomość do wysłania do konsoli
      */
     warn(message:string): void {
-      if (dev.logger) console.warn(`[${prefix}] - DEBUG: ${String(message)}`)
+      if (dev.logger && dev.debug) console.warn(`[${prefix}] - DEBUG: ${String(message)}`)
     }
 
   }

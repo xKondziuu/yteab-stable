@@ -5,6 +5,7 @@ declare namespace logger {
     log: (message:string) => void
     error: (message:string) => void
     warn: (message:string) => void
+    dlog: (message:string, messageDebug:string) => void
 
     debug: {
       loaded: (path:string) => void
