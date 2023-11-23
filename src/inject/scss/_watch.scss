@@ -1,0 +1,32 @@
+ytd-watch-flexy {
+
+
+  & div#movie_player.yteab-playing {
+
+    & .html5-video-container {
+      height: 100%;
+    }
+
+    & iframe#yteab {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: 99999;
+    }
+
+    & .ytp-ce-element,
+    & .ytp-chrome-bottom,
+    & .ytp-chrome-top,
+    & .ytp-cued-thumbnail-overlay,
+    & .ytp-gradient-bottom,
+    & .ytp-gradient-top,
+    & .ytp-iv-player-content,
+    & .ytp-large-play-button,
+    & .ytp-speedmaster-overlay {
+      display: none;
+    }
+
+  }
+
+
+}
