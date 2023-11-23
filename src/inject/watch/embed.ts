@@ -214,8 +214,13 @@ export const embed: inject.watch.embed.Module = {
     let embed = videoid ? yteabelem.watch.iframe.id(videoid) : yteabelem.watch.iframe.any()
     if (!embed) return
 
-    /** Zfocusowanie elementu */
-    embed.focus()
+    /** Zfocusowanie elementu <iframe> */
+    try {
+      embed.focus()
+      logger.debug.log('Iframe element focused')
+    } catch (error) {
+      logger.error('Unable to focus iframe: \n'+error)
+    }
 
   },
 
