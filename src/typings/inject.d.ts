@@ -67,6 +67,8 @@ declare namespace inject {
         },
         keep: (videoid:YouTube.Iframe.src.videoid) => void
         focus: (videoid?:YouTube.Iframe.src.videoid) => void
+        hide: (videoid?:YouTube.Iframe.src.videoid) => void
+        show: (videoid?:YouTube.Iframe.src.videoid) => void
         remove: () => void
 
       }
