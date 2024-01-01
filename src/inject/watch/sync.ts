@@ -90,6 +90,9 @@ export const sync: inject.watch.sync.Module = {
 
     ytelem.watch.player()?.classList.add('yteab-sync')
 
+    // zmienna pomagająca ustalić czy wideo jest zatrzymane
+    let paused:boolean = false
+
     /**
      * Główny timeout synchronizacji - syncInterval, którego najważniejszym
      * zadaniem jest synchronizacja czasu, wartości currentTime, wideo z embed.
@@ -115,24 +118,11 @@ export const sync: inject.watch.sync.Module = {
         // gdy wszystkie wartości są pozyskane
         if (mainvid && embed && embedDOM && embedvid) {
 
+          // korekcja prędkości odtwarzania po odtwarzaniu reklam
+          if (mainvid.playbackRate != 1) mainvid.playbackRate = 1
+
           /** Zatrzymujemy wideo w celu oszczędzania zasobów */
           mainvid.pause()
-
-          /**
-           * Opcjonalne logowanie szczegółów w konsoli przy każdej synchronizacji,
-           * dostępne tylko przy trybie debugowania w celu oszczędzania zasobów.
-           */
-          if (dev.debug) {
-
-            const maintime = Number( mainvid.currentTime.toFixed(3) )                 // przybliżony czas głównego wideo
-            const embedtime = Number( embedvid.currentTime.toFixed(3) )               // przybliżony czas wideo odtwarzanego w ramce
-            const deltatime = Number( Math.abs(embedtime - maintime).toFixed(3) )     // czas delta, różnica pomiędzy głównym wideo a embed
-            const loss = Number( ((deltatime / mainvid.duration) * 100).toFixed(3) )  // procent pominiętego wideo, które nie musiało pobrane
-
-            // logowanie wszystkich obliczonych wartości
-            logger.debug.log(`Synchronization - main: ${maintime.toFixed(2)}, embed: ${embedtime.toFixed(2)}, delta: ${deltatime.toFixed(2)}, loss: ${loss}%`)
-
-          }
 
           /**
            * Wideo czasami przewija się do końca w wyniku błędu synchronizacji, aby wyeliminować ten problem,
@@ -140,8 +130,38 @@ export const sync: inject.watch.sync.Module = {
            */
           if (mainvid.ended) mainvid.play()
 
-          /** Synchronizacja czasu, wartości currentTime, głównego wideo do embed */
-          mainvid.currentTime = embedvid.currentTime
+          // sprawdzamy czy czasy wideo (currentTime) różnią się
+          if (mainvid.currentTime != embedvid.currentTime) {
+
+            paused = false
+
+            /**
+             * Opcjonalne logowanie szczegółów w konsoli przy każdej synchronizacji,
+             * dostępne tylko przy trybie debugowania w celu oszczędzania zasobów.
+             */
+            if (dev.debug) {
+
+              const maintime = Number( mainvid.currentTime.toFixed(3) )                 // przybliżony czas głównego wideo
+              const embedtime = Number( embedvid.currentTime.toFixed(3) )               // przybliżony czas wideo odtwarzanego w ramce
+              const deltatime = Number( Math.abs(embedtime - maintime).toFixed(3) )     // czas delta, różnica pomiędzy głównym wideo a embed
+              const loss = Number( ((deltatime / mainvid.duration) * 100).toFixed(3) )  // procent pominiętego wideo, które nie musiało pobrane
+
+              // logowanie wszystkich obliczonych wartości
+              logger.debug.log(`Synchronization - main: ${maintime.toFixed(2)}, embed: ${embedtime.toFixed(2)}, delta: ${deltatime.toFixed(2)}, loss: ${loss}%`)
+
+            }
+
+            /** Synchronizacja czasu, wartości currentTime, głównego wideo do embed */
+            mainvid.currentTime = embedvid.currentTime
+
+          } else {
+
+            // logowanie informacji o wstrzymaniu filmu
+            if (paused == false) logger.dlog('Video paused, halting...', `Synchronization - VIDEO PAUSED at ${embedvid.currentTime.toFixed(2)}`)
+
+            paused = true
+
+          }
 
         } else {
 
@@ -149,6 +169,11 @@ export const sync: inject.watch.sync.Module = {
           sync.stop()
 
         }
+
+      } else {
+
+        /** Przyśpieszenie x2 odtwarzania reklam w tle */
+        if (mainvid) mainvid.playbackRate = 2
 
       }
 
