@@ -98,12 +98,14 @@ export const embed: inject.watch.embed.Module = {
     // dodajemy do odtwarzacza klasę do zmiany css
     ytelem.watch.player()?.classList.add('yteab-playing')
 
+    // wyciszamy wideo
+    mute.enable()
+
     /** Pobieramy id wideo które użytkownik chce załadować */
     const videoid: YouTube.Iframe.src.videoid = yt_navigate_start.detail.endpoint.watchEndpoint.videoId
 
     /** Tworzymy (przygotowujemy) element <iframe> */
     embed.create(videoid, ()=>{
-      mute.enable() // wyciszamy wideo
       if (callback) callback()
     })
 
@@ -221,6 +223,34 @@ export const embed: inject.watch.embed.Module = {
     } catch (error) {
       logger.error('Unable to focus iframe: \n'+error)
     }
+
+  },
+
+  /**
+   * Funkcja która ukrywa ramkę poprzez ustawienie css visibility do hidden
+   * @param {string} [videoid] - ID wideo na YouTube do odnalezienia ramki, bez niego jest używana dowolna
+   */
+  hide(videoid?:YouTube.Iframe.src.videoid) {
+
+    // pozyskujemy ramkę, jeśli mamy id wideo to po id, a jeśli nie mamy to dowolną, nie kontynuujemy bez
+    let embed = videoid ? yteabelem.watch.iframe.id(videoid) : yteabelem.watch.iframe.any()
+    if (!embed) return
+
+    embed.style.visibility = 'hidden'
+
+  },
+
+  /**
+   * Funkcja która pokazuje ukrytą ramkę poprzez ustawienie css visibility do visible
+   * @param {string} [videoid] - ID wideo na YouTube do odnalezienia ramki, bez niego jest używana dowolna
+   */
+  show(videoid?:YouTube.Iframe.src.videoid) {
+
+    // pozyskujemy ramkę, jeśli mamy id wideo to po id, a jeśli nie mamy to dowolną, nie kontynuujemy bez
+    let embed = videoid ? yteabelem.watch.iframe.id(videoid) : yteabelem.watch.iframe.any()
+    if (!embed) return
+
+    embed.style.visibility = 'visible'
 
   },
 
