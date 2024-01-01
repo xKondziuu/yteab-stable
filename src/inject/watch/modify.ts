@@ -1,6 +1,10 @@
 import inject from '..'
 import { logger } from '../../logger'
 import { yteabelem } from '../../main'
+import { embed } from './embed'
+
+
+var modifyRetryTimeout:number = 0
 
 
 /**
@@ -58,15 +62,17 @@ export const modify: inject.watch.modify.Module = {
    * są usuwane lub ukrywane, są też dodawane lub usuwane klasy w celu zmiany ich domyślnych wartości css.
    * @param {string} [videoid] - ID wideo na YouTube do odnalezienia ramki, bez niego jest używana dowolna
    * @param {Function} [callback] - Funkcja wywoływana gdy sukces
-   * @returns
    */
   now(videoid?:YouTube.Iframe.src.videoid, callback?:Function): void {
 
+    // czyścimy timeout niepowodzenia jeśli jest
+    try { clearTimeout(modifyRetryTimeout) } catch(error){}
+
     // pozyskujemy ramkę, jeśli mamy id wideo to po id, a jeśli nie mamy to dowolną
-    let embed = videoid ? yteabelem.watch.iframe.id(videoid) : yteabelem.watch.iframe.any()
+    let frame = videoid ? yteabelem.watch.iframe.id(videoid) : yteabelem.watch.iframe.any()
 
     // pozyskujemy document ramki, nie kontunuujemy bez niego
-    var embedDOM:Document|undefined = embed?.contentWindow?.document
+    var embedDOM:Document|undefined = frame?.contentWindow?.document
     if (!embedDOM) return
 
     /** Modyfikacja klas głównego elementu odtwarzacza */
@@ -121,7 +127,23 @@ export const modify: inject.watch.modify.Module = {
      * oznacza to że prawdopodobnie powyższe zadana zostały wykonane poprawnie.
      */
     if (playerElement && playerElement.classList.contains('yteab-embed')) {
+
       if (callback) callback()
+
+    } else {
+
+      /**
+       * W wypadku niepowodzenia, czekamy 0.5 sekundy i powtarzamy wszystkie powyższe
+       * czynności poprzez ponowne wywołanie funkcji modify.now(videoid, callback).
+       */
+      embed.hide() // ukrycie niezmodyfikowanej ramki
+      modifyRetryTimeout = setTimeout(()=>{
+        modify.now(videoid, ()=>{
+          logger.dlog('Adjusted player content', 'Frame content manipulated after a retry')
+          embed.show() // pokazanie ramkmi dopiero gdy mamy pewność że jest zmodyfikowana
+        })
+      },500)
+
     }
 
   }
