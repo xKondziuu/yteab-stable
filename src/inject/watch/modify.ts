@@ -83,6 +83,15 @@ export const modify: inject.watch.modify.Module = {
       playerElement.classList.add('yteab-embed')
     }
 
+    /** Dodanie miejsca na przycisk "Next" */
+    let nextButton:HTMLDivElement|null = embedDOM.querySelector('.ytp-next-button')
+    if (nextButton) {
+      nextButton.style.display = 'block'
+      setTimeout(()=>{
+        nextButton?.setAttribute('aria-disabled', 'false')
+      }, 2000)
+    }
+
     /** Elementy do usunięcia */
     let elementsToRemove:string[] = [
       '.ytp-ce-element',

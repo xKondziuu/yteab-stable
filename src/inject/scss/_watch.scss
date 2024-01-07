@@ -14,7 +14,10 @@ ytd-watch-flexy {
       z-index: 99999;
     }
 
-    & .ytp-chrome-bottom,
+    & .ytp-chrome-bottom {
+      visibility: hidden;
+    }
+
     & .ytp-chrome-top,
     & .ytp-cued-thumbnail-overlay,
     & .ytp-gradient-bottom,
