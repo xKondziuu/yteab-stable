@@ -87,9 +87,7 @@ export const modify: inject.watch.modify.Module = {
     let nextButton:HTMLDivElement|null = embedDOM.querySelector('.ytp-next-button')
     if (nextButton) {
       nextButton.style.display = 'block'
-      setTimeout(()=>{
-        nextButton?.setAttribute('aria-disabled', 'false')
-      }, 2000)
+      nextButton.style.opacity = '.9'
     }
 
     /** Elementy do usunięcia */
