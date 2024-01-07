@@ -2,7 +2,7 @@ import inject from '.'
 import * as dev from '../dev.json'
 import { logger } from '../logger'
 import { embed } from './watch/embed'
-import { yteabelem } from '../main'
+import { ytelem, yteabelem } from '../main'
 import { mute } from './watch/mute'
 
 
@@ -95,9 +95,11 @@ export const events: inject.events.Module = {
 
               } else {
 
+                logger.log(`Processing video '${data.detail.endpoint.watchEndpoint.videoId}'`)
+
                 // tworzenie ramki którą później będziemy przetwarzać
                 embed.create(videoid, ()=>{
-                  logger.log('Ready for further instructions')
+                  ytelem.watch.player()?.classList.add('yteab-playing')
                   embed.preparation.preserve(data)
                 })
 
