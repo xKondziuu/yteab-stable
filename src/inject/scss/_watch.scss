@@ -14,7 +14,6 @@ ytd-watch-flexy {
       z-index: 99999;
     }
 
-    & .ytp-ce-element,
     & .ytp-chrome-bottom,
     & .ytp-chrome-top,
     & .ytp-cued-thumbnail-overlay,
@@ -22,7 +21,8 @@ ytd-watch-flexy {
     & .ytp-gradient-top,
     & .ytp-iv-player-content,
     & .ytp-large-play-button,
-    & .ytp-speedmaster-overlay {
+    & .ytp-speedmaster-overlay,
+    & .ytp-spinner {
       display: none;
     }
 
