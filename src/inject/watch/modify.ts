@@ -85,6 +85,7 @@ export const modify: inject.watch.modify.Module = {
 
     /** Elementy do usunięcia */
     let elementsToRemove:string[] = [
+      '.ytp-ce-element',
       '.ytp-chrome-top',
       '.ytp-gradient-top',
       '.ytp-more-videos-view'
