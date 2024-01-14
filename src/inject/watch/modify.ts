@@ -84,7 +84,7 @@ export const modify: inject.watch.modify.Module = {
     }
 
     /** Umieszczenie domyślnie ukrytego przycisku "Next" */
-    let nextButton:HTMLDivElement|null = embedDOM.querySelector('.ytp-next-button')
+    let nextButton:HTMLAnchorElement|null = embedDOM.querySelector('.ytp-next-button')
     if (nextButton) {
       nextButton.style.display = 'block'
       nextButton.style.opacity = '.9'
@@ -95,6 +95,17 @@ export const modify: inject.watch.modify.Module = {
         } else {
           ytelem.watch.ytd_watch_next.first()?.click()
         }
+      }
+    }
+
+    /** Umieszczenie domyślnie ukrytego przycisku "Prev" jeśli playlista */
+    let prevButton:HTMLAnchorElement|null = embedDOM.querySelector('.ytp-prev-button')
+    if (prevButton && ytif.watch.isplaylist()) {
+      prevButton.style.display = 'block'
+      prevButton.style.opacity = '.9'
+      prevButton.style.cursor = 'pointer'
+      prevButton.onclick = () => {
+        ytelem.watch.controls.prev()?.click()
       }
     }
 
