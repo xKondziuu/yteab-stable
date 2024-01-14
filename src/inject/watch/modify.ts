@@ -1,6 +1,6 @@
 import inject from '..'
 import { logger } from '../../logger'
-import { yteabelem } from '../../main'
+import { yteabelem, ytelem, ytif } from '../../main'
 import { embed } from './embed'
 
 
@@ -83,11 +83,19 @@ export const modify: inject.watch.modify.Module = {
       playerElement.classList.add('yteab-embed')
     }
 
-    /** Dodanie miejsca na przycisk "Next" */
+    /** Umieszczenie domyślnie ukrytego przycisku "Next" */
     let nextButton:HTMLDivElement|null = embedDOM.querySelector('.ytp-next-button')
     if (nextButton) {
       nextButton.style.display = 'block'
       nextButton.style.opacity = '.9'
+      nextButton.style.cursor = 'pointer'
+      nextButton.onclick = () => {
+        if (ytif.watch.isplaylist()) {
+          ytelem.watch.controls.next()?.click()
+        } else {
+          ytelem.watch.ytd_watch_next.first()?.click()
+        }
+      }
     }
 
     /** Elementy do usunięcia */
