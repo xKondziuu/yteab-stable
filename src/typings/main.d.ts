@@ -13,11 +13,25 @@ declare namespace main {
 
   interface Ytelem {
     watch: {
-      ytd_top: () => HTMLElement | null
+      ytd_watch_flexy: () => HTMLElement | null
+      columns: () => HTMLDivElement | null
+      columns_primary: () => HTMLDivElement | null
+      columns_secondary: () => HTMLDivElement | null
+      ytd_player: () => HTMLElement | null
       player_container: () => HTMLDivElement | null
       player: () => HTMLDivElement | null
       video_container: () => HTMLDivElement | null
       video: () => HTMLVideoElement | null
+      tooltip: () => HTMLDivElement | null
+      ytd_watch_next: {
+        first: () => HTMLElement | null
+        nth: (x:number) => HTMLElement | null
+      }
+      controls: {
+        prev: () => HTMLAnchorElement | null
+        pause: () => HTMLButtonElement | null
+        next: () => HTMLAnchorElement | null
+      }
       settings: {
         button: () => HTMLButtonElement | null
         menu: () => HTMLDivElement | null
@@ -40,6 +54,7 @@ declare namespace main {
   interface Ytif {
     watch: {
       adplaying: () => boolean|undefined
+      isplaylist: () => boolean|undefined
     }
   }
 
