@@ -69,7 +69,29 @@ declare namespace inject {
         focus: (videoid?:YouTube.Iframe.src.videoid) => void
         hide: (videoid?:YouTube.Iframe.src.videoid) => void
         show: (videoid?:YouTube.Iframe.src.videoid) => void
+        getinfo: (videoid?:YouTube.Iframe.src.videoid) => getinfo|undefined
         remove: () => void
+
+      }
+
+      interface getinfo {
+
+        iframe: {
+          clientHeight: number
+          clientWidth: number
+          src: string
+        }
+        video: {
+          clientHeight: number
+          clientWidth: number
+          duration: number
+          ended: boolean
+          loop: boolean
+          paused: boolean
+          videoHeight: number
+          videoWidth: number
+          volume: number
+        }
 
       }
 
@@ -117,6 +139,28 @@ declare namespace inject {
           init: (videoid?:YouTube.Iframe.src.videoid|null) => void
           get: (videoid?:YouTube.Iframe.src.videoid|null) => YouTube.quality|null
         }
+
+      }
+
+    }
+
+    namespace ratiofix {
+
+      interface Module {
+
+        getratio: {
+          css: () => getreatio|undefined
+          video: (videoid?:YouTube.Iframe.src.videoid) => getreatio|undefined
+        }
+        align: (videoid?:YouTube.Iframe.src.videoid, callback?:Function) => void
+        fixnow: (videoid?:YouTube.Iframe.src.videoid) => void
+
+      }
+
+      interface getreatio {
+
+        height: number,
+        width: number
 
       }
 
