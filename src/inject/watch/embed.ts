@@ -255,6 +255,49 @@ export const embed: inject.watch.embed.Module = {
   },
 
   /**
+   * Funkcja zwracająca wybrane informacje na temat ramki <iframe> oraz <video> w ramce w postaci objektu z danymi
+   * UWAGA! Działa tylko gdy <video> w ramce jest załadowane (video.onloadedmetadata), inaczej zwraca undefined
+   * @param {string} [videoid] - ID wideo na YouTube do odnalezienia ramki, bez niego jest używana dowolna
+   * @returns {Object} - Wybrane informacje pozyskane na temat ramki oraz <video> w ramce
+   */
+  getinfo(videoid?:YouTube.Iframe.src.videoid) {
+
+    // pozyskujemy ramkę, jeśli mamy id wideo to po id, a jeśli nie mamy to dowolną
+    const frame = videoid ? yteabelem.watch.iframe.id(videoid) : yteabelem.watch.iframe.any()
+    if (!frame) return
+
+    // pozyskujemy document ramki, nie kontunuujemy bez niego
+    var embedDOM:Document|undefined = frame?.contentWindow?.document
+    if (!embedDOM) return
+
+    // pozyskujemy <video> z ramki w celu wydobycia informacji na jego temat
+    const video: HTMLVideoElement | null = embedDOM.querySelector('#player div.html5-video-container video')
+    if (!video) return
+
+    const response: inject.watch.embed.getinfo = {
+      iframe: {
+        clientHeight: frame.clientHeight,
+        clientWidth: frame.clientWidth,
+        src: frame.src
+      },
+      video: {
+        clientHeight: video.clientHeight,
+        clientWidth: video.clientWidth,
+        duration: video.duration,
+        ended: video.ended,
+        loop: video.loop,
+        paused: video.paused,
+        videoHeight: video.videoHeight,
+        videoWidth: video.videoWidth,
+        volume: video.volume
+      }
+    }
+
+    return response
+
+  },
+
+  /**
    * Funkcja usuwająca wszystkie elementy <iframe> jeśli istnieje chociaż jeden.
    * @see /src/inject/events.ts run(listener, event?)
    */
