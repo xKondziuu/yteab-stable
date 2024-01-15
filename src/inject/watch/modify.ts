@@ -2,6 +2,7 @@ import inject from '..'
 import { logger } from '../../logger'
 import { yteabelem, ytelem, ytif } from '../../main'
 import { embed } from './embed'
+import { ratiofix } from './ratiofix'
 
 
 var modifyRetryTimeout:number = 0
@@ -154,6 +155,9 @@ export const modify: inject.watch.modify.Module = {
      * oznacza to że prawdopodobnie powyższe zadana zostały wykonane poprawnie.
      */
     if (playerElement && playerElement.classList.contains('yteab-embed')) {
+
+      /** Korygujemy aspect ratio jeśli zaszła taka potrzeba */
+      ratiofix.fixnow(videoid)
 
       if (callback) callback()
 
