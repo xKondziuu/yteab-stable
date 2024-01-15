@@ -3,6 +3,10 @@ ytd-watch-flexy {
 
   & div#movie_player.yteab-playing {
 
+    .video-ads.ytp-ad-module, .video-ads.ytp-ad-module * {
+      display: none!important;
+    }
+
     & .html5-video-container {
       height: 100%;
     }
@@ -11,7 +15,7 @@ ytd-watch-flexy {
       position: absolute;
       height: 100%;
       width: 100%;
-      z-index: 99999;
+      z-index: 9999;
     }
 
     & .ytp-chrome-bottom {
