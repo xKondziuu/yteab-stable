@@ -121,10 +121,20 @@ export const embed: inject.watch.embed.Module = {
      * @see /src/inject/events.ts run(listener, event?)
      * @see /src/inject/watch/sync.ts safestart(yt_navigate_finish, delay, rate)
      */
-    preserve(yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish) {
+    preserve(yt_navigate_finish_OR_ytInitialPlayerResponse:YouTube.EventResponse.Event.yt_navigate_finish|YouTube.PlayerResponse.ytInitialPlayerResponse) {
+
+      /**
+       * Sprawdzamy czy podano yt_navigate_finish czy ytInitialPlayerResponse,
+       * dodajemy zmienną isEvent:boolean która mówi czy to event czy nie.
+       */
+      let detect = yt_navigate_finish_OR_ytInitialPlayerResponse as any
+      var isEvent:boolean = false
+      if (detect.type == 'yt-navigate-finish') isEvent = true
+      const yt_navigate_finish = yt_navigate_finish_OR_ytInitialPlayerResponse as YouTube.EventResponse.Event.yt_navigate_finish
+      const ytInitialPlayerResponse = yt_navigate_finish_OR_ytInitialPlayerResponse as YouTube.PlayerResponse.ytInitialPlayerResponse
 
       /** Pobieramy id finalnie załadowanego wideo */
-      const videoid: YouTube.Iframe.src.videoid = yt_navigate_finish.detail.response.endpoint.watchEndpoint.videoId
+      const videoid: YouTube.Iframe.src.videoid = isEvent ? yt_navigate_finish.detail.response.endpoint.watchEndpoint.videoId : ytInitialPlayerResponse.videoDetails.videoId
 
       /** Pobieramy załadowany <iframe> */
       const iframe = yteabelem.watch.iframe.id(videoid)
@@ -138,7 +148,7 @@ export const embed: inject.watch.embed.Module = {
         embed.keep(videoid)
 
         /** Modyfikujemy zawartość ramki w sposób bezpieczny */
-        modify.safe(yt_navigate_finish)
+        modify.safe(yt_navigate_finish_OR_ytInitialPlayerResponse)
 
         /** Przenosimy focus na ramkę */
         embed.focus(videoid)

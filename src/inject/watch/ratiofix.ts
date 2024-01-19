@@ -10,7 +10,7 @@ var fixnowStart:number, fixnowEnd:number, fixnowInterval:number
 
 
 /**
- * Moduł z funkcjami do włączania i wyłączania ciągłego wyciszenia głównego wideo.
+ * Moduł z funkcjami do określenia oraz naprawy aspect ratio ramki.
  * @interface Module
  * @module ratiofix
  * @memberof inject/watch

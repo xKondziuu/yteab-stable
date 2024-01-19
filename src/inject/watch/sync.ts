@@ -24,23 +24,58 @@ export const sync: inject.watch.sync.Module = {
    * @param {number} [rate=3] - Wartość (w sekundach) określająca delay interwału synchronizacji wideo, domyślna wartość 4 sekundy
    * @see /src/inject/watch/embed.ts preparation.preserve(yt_navigate_finish)
    */
-  safestart(yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish, delay:number = 1, rate:number = 2) {
+  safestart(yt_navigate_finish_OR_ytInitialPlayerResponse:YouTube.EventResponse.Event.yt_navigate_finish|YouTube.PlayerResponse.ytInitialPlayerResponse, delay:number = 1, rate:number = 2) {
 
-    /** Pobieramy dane odpowiedzi eventu */
-    const response = yt_navigate_finish.detail.response
+    /**
+     * Sprawdzamy czy podano yt_navigate_finish czy ytInitialPlayerResponse,
+     * dodajemy zmienną isEvent:boolean która mówi czy to event czy nie.
+     */
+    let detect = yt_navigate_finish_OR_ytInitialPlayerResponse as any
+    var isEvent:boolean = false
+    if (detect.type == 'yt-navigate-finish') isEvent = true
+    const yt_navigate_finish = yt_navigate_finish_OR_ytInitialPlayerResponse as YouTube.EventResponse.Event.yt_navigate_finish
+    const ytInitialPlayerResponse = yt_navigate_finish_OR_ytInitialPlayerResponse as YouTube.PlayerResponse.ytInitialPlayerResponse
 
-    if (  // jeśli poniższe warunki są spełnione
-      response &&                                                      // czy uzyskano odpowiedź eventu
-      response.page == 'watch' &&                                      // czy typ strony to 'watch'
-      response.playerResponse.playabilityStatus.status == 'OK' &&      // czy wideo załadowało się poprawnie
-      response.playerResponse.playabilityStatus.playableInEmbed &&     // czy możnaje je odtwarzać w ramce
-      response.playerResponse.videoDetails.isOwnerViewing == false &&  // czy wyświetla właściciel
-      response.playerResponse.videoDetails.isPrivate == false &&       // czy jest prywatne
-      response.playerResponse.videoDetails.isLiveContent == false      // czy to transmisja live
-    ) {
+    var conditionsToMet:boolean
+    if (isEvent) {
+
+      // pobieramy dane odpowiedzi eventu
+      const response = yt_navigate_finish.detail.response
+
+      // ustalamy warunki do spełnienia
+      conditionsToMet = (
+        response &&                                                      // czy uzyskano odpowiedź eventu
+        response.page == 'watch' &&                                      // czy typ strony to 'watch'
+        response.playerResponse.playabilityStatus.status == 'OK' &&      // czy wideo załadowało się poprawnie
+        response.playerResponse.playabilityStatus.playableInEmbed &&     // czy możnaje je odtwarzać w ramce
+        response.playerResponse.videoDetails.isOwnerViewing == false &&  // czy wyświetla właściciel
+        response.playerResponse.videoDetails.isPrivate == false &&       // czy jest prywatne
+        response.playerResponse.videoDetails.isLiveContent == false      // czy to transmisja live
+      )
+
+    } else {
+
+      // zmienna pozwalająca ustalić czy typ strony to 'watch'
+      const iswatch = (document.querySelector('ytd-masthead')?.hasAttribute('is-watch-page') && (document.querySelector('ytd-watch-flexy')?.getAttribute('role') == 'main') || window.location.pathname == '/watch')
+
+      // ustalamy warunki do spełnienia
+      conditionsToMet = (
+        ytInitialPlayerResponse &&                                       // czy uzyskano odpowiedź odtwarzacza
+        iswatch &&                                                       // czy typ strony to 'watch'
+        ytInitialPlayerResponse.playabilityStatus.status == 'OK' &&      // czy wideo załadowało się poprawnie
+        ytInitialPlayerResponse.playabilityStatus.playableInEmbed &&     // czy możnaje je odtwarzać w ramce
+        ytInitialPlayerResponse.videoDetails.isOwnerViewing == false &&  // czy wyświetla właściciel
+        ytInitialPlayerResponse.videoDetails.isPrivate == false &&       // czy jest prywatne
+        ytInitialPlayerResponse.videoDetails.isLiveContent == false      // czy to transmisja live
+      )
+
+    }
+
+    // jeśli wyrenderowano ramkę oraz ustalone warunki są spełnione
+    if (yteabelem.watch.iframe.any() && conditionsToMet) {
 
       // pobieramy id wideo youtube
-      let videoid = response.endpoint.watchEndpoint.videoId as YouTube.Iframe.src.videoid
+      const videoid: YouTube.Iframe.src.videoid = isEvent ? yt_navigate_finish.detail.response.endpoint.watchEndpoint.videoId : ytInitialPlayerResponse.videoDetails.videoId
 
       // czyścimy timeout syncDelay jeśli jest
       clearTimeout(syncDelay)
