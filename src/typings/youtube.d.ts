@@ -66,61 +66,75 @@ declare namespace YouTube {
 
   namespace EventResponse {
 
-    namespace streamingData {
+    namespace ServiceTrackingParams {
 
-      interface adaptiveFormat {
+      interface params {
 
-        itag: number
-        url: string
-        mimeType: string
-        bitrate: number
-        width: number
-        height: number
-        initRange: {
-          start: string
-          end: string
-        }
-        indexRange: {
-          start: string
-          end: string
-        }
-        lastModified: string
-        contentLength: string
-        quality: YouTube.quality
-        fps: YouTube.fps
-        qualityLabel: YouTube.qualityLabel
-        projectionType: string
-        averageBitrate: number
-        colorInfo: {
-          primaries: string
-          transferCharacteristics: string
-          matrixCoefficients: string
-        }
-        approxDurationMs: string
+        key: string
+        value: string
 
       }
 
-      interface format {
+      interface serviceTrackingParams {
 
-        itag: number
-        url: string
-        mimeType: string
-        bitrate: number
-        width: number
-        height: number
-        lastModified: string
-        contentLength: string
-        quality: YouTube.quality
-        fps: YouTube.fps
-        qualityLabel: YouTube.qualityLabel
-        projectionType: string
-        averageBitrate: number
-        audioQuality: YouTube.audioQuality
-        approxDurationMs: string
-        audioSampleRate: string
-        audioChannels: YouTube.audioChannels
+        service: string
+        params: params[]
 
       }
+
+    }
+
+    interface format {
+
+      itag: number
+      url: string
+      mimeType: string
+      bitrate: number
+      width: number
+      height: number
+      lastModified: string
+      contentLength: string
+      quality: YouTube.quality
+      fps: YouTube.fps
+      qualityLabel: YouTube.qualityLabel
+      projectionType: string
+      averageBitrate: number
+      audioQuality: YouTube.audioQuality
+      approxDurationMs: string
+      audioSampleRate: string
+      audioChannels: YouTube.audioChannels
+
+    }
+
+    interface adaptiveFormat {
+
+      itag: number
+      url: string
+      mimeType: string
+      bitrate: number
+      width: number
+      height: number
+      initRange: {
+        start: string
+        end: string
+      }
+      indexRange: {
+        start: string
+        end: string
+      }
+      lastModified: string
+      contentLength: string
+      quality: YouTube.quality
+      fps: YouTube.fps
+      qualityLabel: YouTube.qualityLabel
+      projectionType: string
+      averageBitrate: number
+      colorInfo: {
+        primaries: string
+        transferCharacteristics: string
+        matrixCoefficients: string
+      }
+      approxDurationMs: string
 
     }
 
@@ -130,10 +144,10 @@ declare namespace YouTube {
         playerAdParams: {
           showContentThumbnail: boolean
           enabledEngageTypes: string
-        },
+        }
         gutParams: {
           tag: string
-        },
+        }
         showCompanion: boolean
         showInstream: boolean
         useGut: boolean
@@ -143,8 +157,8 @@ declare namespace YouTube {
 
     interface thumbnails {
 
-      url: string,
-      width: number,
+      url: string
+      width: number
       height: number
 
     }
@@ -169,7 +183,7 @@ declare namespace YouTube {
                 webPageType: string
                 rootVe: number
               }
-            },
+            }
             watchEndpoint: {
               videoId: string
               nofollow: boolean
@@ -181,7 +195,7 @@ declare namespace YouTube {
                 }
               }
             }
-          },
+          }
           pageType: string
           fromHistory: boolean
           response: {
@@ -195,7 +209,7 @@ declare namespace YouTube {
                   webPageType: string
                   rootVe: number
                 }
-              },
+              }
               watchEndpoint: {
                 videoId: string   //IMPORTANT
                 nofollow: boolean
@@ -212,106 +226,17 @@ declare namespace YouTube {
             preconnect: string[]
             playerResponse: {
               responseContext: {
-                serviceTrackingParams: [
-                  {
-                    service: 'GFEEDBACK',
-                    params: [
-                      {
-                        key: 'is_alc_surface',
-                        value: 'true'|'false'
-                      },
-                      {
-                        key: 'ipcc',
-                        value: '0'|'1'
-                      },
-                      {
-                        key: 'is_viewed_live',
-                        value: 'True'|'False'   //IMPORTANT
-                      },
-                      {
-                        key: 'premium_membership',
-                        value: 'member'|'non_member'   //IMPORTANT
-                      },
-                      {
-                        key: 'has_unlimited_entitlement',
-                        value: 'True'|'False'
-                      },
-                      {
-                        key: 'has_alc_entitlement',
-                        value: 'true'|'false'
-                      },
-                      {
-                        key: 'logged_in',
-                        value: '0'|'1'
-                      },
-                      {
-                        key: 'e',
-                        value: string
-                      }
-                    ]
-                  },
-                  {
-                    service: 'CSI',
-                    params: [
-                      {
-                        key: 'yt_ad',
-                        value: '0'|'1'   //IMPORTANT
-                      },
-                      {
-                        key: 'c',
-                        value: 'WEB'
-                      },
-                      {
-                        key: 'cver',
-                        value: string
-                      },
-                      {
-                        key: 'yt_li',
-                        value: '0'|'1'
-                      },
-                      {
-                        key: 'GetPlayer_rid',
-                        value: string
-                      }
-                    ]
-                  },
-                  {
-                    service: 'GUIDED_HELP',
-                    params: [
-                      {
-                        key: 'logged_in',
-                        value: '0'|'1'
-                      }
-                    ]
-                  },
-                  {
-                    service: 'ECATCHER',
-                    params: [
-                      {
-                        key: 'client.version',
-                        value: string
-                      },
-                      {
-                        key: 'client.name',
-                        value: 'WEB'
-                      },
-                      {
-                        key: 'client.fexp',
-                        value: string
-                      }
-                    ]
-                  }
-                ],
+                serviceTrackingParams: ServiceTrackingParams.serviceTrackingParams[]
                 maxAgeSeconds: number
                 mainAppWebResponseContext: {
                   datasyncId: string
                   loggedOut: boolean
                   trackingParam: string
-                },
+                }
                 webResponseContextExtensionData: {
                   hasDecorated: boolean
                 }
-              },
+              }
               playabilityStatus: {
                 status: 'OK'   //IMPORTANT
                 playableInEmbed: boolean   //IMPORTANT
@@ -328,48 +253,48 @@ declare namespace YouTube {
                 }
                 miniplayer: {
                   miniplayerRenderer: {
-                    playbackMode: 'PLAYBACK_MODE_ALLOW'   //IMPORTANT
+                    playbackMode: string   //IMPORTANT
                   }
                 }
                 contextParams: string
               }
               streamingData: {
                 expiresInSeconds: string
-                formats: YouTube.EventResponse.streamingData.format[]
-                adaptiveFormats: YouTube.EventResponse.streamingData.adaptiveFormat[]
+                formats: format[]
+                adaptiveFormats: adaptiveFormat[]
               }
-              playerAds: YouTube.EventResponse.playerAds[]
+              playerAds: playerAds[]
               playbackTracking: {
                 videostatsPlaybackUrl: {
                   baseUrl: string
-                },
+                }
                 videostatsDelayplayUrl: {
                   baseUrl: string
-                },
+                }
                 videostatsWatchtimeUrl: {
                   baseUrl: string
-                },
+                }
                 ptrackingUrl: {
                   baseUrl: string
-                },
+                }
                 qoeUrl: {
                   baseUrl: string
-                },
+                }
                 atrUrl: {
                   baseUrl: string
                   elapsedMediaTimeSeconds: number
-                },
+                }
                 videostatsScheduledFlushWalltimeSeconds: number[]
-                videostatsDefaultFlushIntervalSeconds: number,
+                videostatsDefaultFlushIntervalSeconds: number
                 youtubeRemarketingUrl: {
-                  baseUrl: string,
+                  baseUrl: string
                   elapsedMediaTimeSeconds: number
-                },
+                }
                 googleRemarketingUrl: {
                   baseUrl: string
                   elapsedMediaTimeSeconds: number
                 }
-              },
+              }
               videoDetails: {
                 videoId: string   //IMPORTANT
                 title: string   //IMPORTANT
@@ -380,7 +305,7 @@ declare namespace YouTube {
                 shortDescription: string
                 isCrawlable: boolean
                 thumbnail: {
-                  thumbnails: YouTube.EventResponse.thumbnails[]
+                  thumbnails: thumbnails[]
                 }
                 allowRatings: boolean
                 viewCount: number
@@ -394,19 +319,19 @@ declare namespace YouTube {
               microformat: {
                 playerMicroformatRenderer: {
                   thumbnail: {
-                    thumbnails: YouTube.EventResponse.thumbnails[]
-                  },
+                    thumbnails: thumbnails[]
+                  }
                   embed: {
                     iframeUrl: string   //IMPORTANT
                     width: number
                     height: number
-                  },
+                  }
                   title: {
                     simpleText: string   //IMPORTANT
-                  },
+                  }
                   description: {
                     simpleText: string   //IMPORTANT
-                  },
+                  }
                   lengthSeconds: string
                   ownerProfileUrl: string   //IMPORTANT
                   externalChannelId: string
@@ -456,7 +381,7 @@ declare namespace YouTube {
                 url: string   //IMPORTANT
                 webPageType: string
               }
-            },
+            }
             watchEndpoint: {
               nofollow: boolean
               videoId: string   //IMPORTANT
@@ -486,6 +411,789 @@ declare namespace YouTube {
       }
 
       type yt_page_type_changed = undefined
+
+    }
+
+  }
+
+  namespace PlayerResponse {
+
+    interface adPlacements {
+
+      adPlacementRenderer: {
+        adSlotLoggingData: {
+          serializedSlotAdServingDataEntry: string
+        }
+        config: {
+          adPlacementConfig: {
+            adTimeOffset: {
+              offsetEndMilliseconds: string
+              offsetStartMilliseconds: string
+            }
+            hideCueRangeMarker: boolean
+            kind: string
+          }
+        }
+        renderer: {
+          adBreakServiceRenderer: {
+            getAdBreakUrl: string
+            prefetchMilliseconds: string
+          }
+          clientForecastingAdRenderer: Object
+        }
+      }
+
+    }
+
+    namespace Annotations {
+
+      namespace ServiceEndpoints {
+
+        interface actions {
+
+          clickTrackingParams: string
+          openPopupAction: {
+            popup: {
+              confirmDialogRenderer: {
+                cancelButton: {
+                  buttonRenderer: {
+                    accessibility: {
+                      label: string
+                    }
+                    isDisabled: boolean
+                    size: string
+                    style: string
+                    text: {
+                      runs: runs[]
+                    }
+                    trackingParams: string
+                  }
+                }
+                confirmButton: {
+                  buttonRenderer: {
+                    accessibility: {
+                      label: string
+                    }
+                    isDisabled: boolean
+                    serviceEndpoint: {
+                      clickTrackingParams: string
+                      commandMetadata: {
+                        webCommandMetadata: {
+                          apiUrl: string
+                          sendPost: boolean
+                        }
+                      }
+                      unsubscribeEndpoint: {
+                        channelIds: string[]
+                        params: string
+                      }
+                    }
+                    size: string
+                    style: string
+                    text: {
+                      runs: runs[]
+                    }
+                    trackingParams: string
+                  }
+                }
+                dialogMessages: [
+                  {
+                    runs: runs[]
+                  }
+                ]
+                primaryIsCancel: boolean
+                trackingParams: string
+              }
+            }
+            popupType: string
+          }
+
+        }
+
+        interface serviceEndpoints {
+
+          clickTrackingParams: string
+          commandMetadata: {
+            webCommandMetadata: {
+              sendPost: boolean
+            }
+          }
+          signalServiceEndpoint: {
+            actions: actions[]
+            signal: string
+          }
+
+        }
+
+      }
+
+      interface runs {
+
+        text: string
+
+      }
+
+      interface thumbnails {
+
+          height: number
+          url: string
+          width: number
+
+      }
+
+      interface annotations {
+
+        playerAnnotationsExpandedRenderer: {
+          allowSwipeDismiss: true
+          annotationId: string
+          featuredChannel: {
+            channelName: string
+            endTimeMs: string
+            navigationEndpoint: {
+              browseEndpoint: {
+                browseId: string
+              }
+              clickTrackingParams: string
+              commandMetadata: {
+                webCommandMetadata: {
+                  apiUrl: string
+                  rootVe: number
+                  url: string
+                  webPageType: string
+                }
+              }
+            }
+            startTimeMs: string
+            subscribeButton: {
+              subscribeButtonRenderer: {
+                buttonText: {
+                  runs: runs[]
+                }
+                channelId: string
+                enabled: boolean
+                serviceEndpoints: ServiceEndpoints.serviceEndpoints[]
+                showPreferences: boolean
+                subscribeAccessibility: {
+                  accessibilityData: {
+                    label: string
+                  }
+                }
+                subscribed: boolean
+                subscribedButtonText: {
+                  runs: runs[]
+                }
+                trackingParams: string
+                type: string
+                unsubscribeAccessibility: {
+                  accessibilityData: {
+                    label: string
+                  }
+                }
+                unsubscribeButtonText: {
+                  runs: runs[]
+                }
+                unsubscribedButtonText: {
+                  runs: runs[]
+                }
+              }
+            }
+            trackingParams: string
+            watermark: {
+              thumbnails: thumbnails[]
+            }
+          }
+        }
+
+      }
+
+    }
+
+    interface audioTracks {
+
+      captionTrackIndices: number[]
+
+    }
+
+    interface captionTracks {
+
+      baseUrl: string
+      isTranslatable: boolean
+      kind: string
+      languageCode: string
+      name: {
+        simpleText: string
+      }
+      trackName: string
+      vssId: string
+
+    }
+
+    interface translationLanguages {
+
+      languageCode: string
+      languageName: {
+        simpleText: string
+      }
+
+    }
+
+    namespace Cards {
+
+      interface cueRanges {
+
+        endCardActiveMs: string
+        iconAfterTeaserMs: string
+        startCardActiveMs: string
+        teaserDurationMs: string
+
+      }
+
+      interface cards {
+
+        cardRenderer: {
+          cueRanges: cueRanges[]
+          teaser: {
+            simpleCardTeaserRenderer: {
+              logVisibilityUpdates: boolean
+              message: {
+                simpleText: string
+              }
+              onTapCommand: {
+                changeEngagementPanelVisibilityAction: {
+                  targetId: string
+                  visibility: string
+                }
+                clickTrackingParams: string
+              }
+              prominent: boolean
+              trackingParams: string
+            }
+          }
+          trackingParams: string
+        }
+
+      }
+
+    }
+
+    namespace Elements {
+
+      interface runs {
+
+        text: string
+
+      }
+
+      namespace ServiceEndpoints {
+
+        interface dialogMessages {
+
+          runs: runs[]
+
+        }
+
+        interface actions {
+
+          clickTrackingParams: string
+          openPopupAction: {
+            popup: {
+              confirmDialogRenderer: {
+                cancelButton: {
+                  buttonRenderer: {
+                    accessibility: {
+                      label: string
+                    }
+                    isDisabled: boolean
+                    size: string
+                    style: string
+                    text: {
+                      runs: runs[]
+                    }
+                    trackingParams: string
+                  }
+                }
+                confirmButton: {
+                  buttonRenderer: {
+                    accessibility: {
+                      label: string
+                    }
+                    isDisabled: boolean
+                    serviceEndpoint: {
+                      clickTrackingParams: string
+                      commandMetadata: {
+                        webCommandMetadata: {
+                          apiUrl: string
+                          sendPost: boolean
+                        }
+                      }
+                      unsubscribeEndpoint: {
+                        channelIds: string[]
+                        params: string
+                      }
+                    }
+                    size: string
+                    style: string
+                    text: {
+                      runs: runs[]
+                    }
+                    trackingParams: string
+                  }
+                }
+                dialogMessages: dialogMessages[]
+                primaryIsCancel: boolean
+                trackingParams: string
+              }
+            }
+            popupType: string
+          }
+
+        }
+
+        interface serviceEndpoints {
+
+          clickTrackingParams: string
+          commandMetadata: {
+            webCommandMetadata: {
+              sendPost: boolean
+            }
+          }
+          signalServiceEndpoint: {
+            actions: actions[]
+            signal: string
+          }
+
+        }
+
+      }
+
+      interface thumbnailsURL {
+
+        url: string
+
+      }
+
+      interface thumbnailsALL {
+
+        height: number
+        url: string
+        width: number
+
+      }
+
+      interface elements {
+
+        endscreenElementRenderer: {
+          aspectRatio: number
+          callToAction: {
+            simpleText: string
+          }
+          dismiss: {
+            simpleText: string
+          }
+          endMs: string
+          endpoint: {
+            browseEndpoint: {
+              browseId: string
+            }
+            clickTrackingParams: string
+            commandMetadata: {
+              webCommandMetadata: {
+                apiUrl: string
+                rootVe: number
+                url: string
+                webPageType: string
+              }
+            }
+          }
+          hovercardButton: {
+            subscribeButtonRenderer: {
+              buttonText: {
+                runs: runs[]
+              }
+              channelId: string   //IMPORTANT
+              enabled: boolean
+              serviceEndpoints: []
+              showPreferences: false
+              subscribeAccessibility: {
+                accessibilityData: {
+                  label: string
+                }
+              }
+              subscribed: boolean
+              subscribedButtonText: {
+                runs: runs[]
+              }
+              trackingParams: string
+              type: string
+              unsubscribeAccessibility: {
+                accessibilityData: {
+                  label: string
+                }
+              }
+              unsubscribeButtonText: {
+                runs: runs[]
+              }
+              unsubscribedButtonText: {
+                runs: runs[]
+              }
+            }
+          }
+          icon: {
+            thumbnails: thumbnailsURL[]
+          }
+          id: number
+          image: {
+            thumbnails: thumbnailsALL[]
+          }
+          isSubscribe: boolean
+          left: number
+          metadata: {
+            simpleText: string
+          }
+          startMs: string
+          style: string
+          title: {
+            accessibility: {
+              accessibilityData: {
+                label: string
+              }
+            }
+            simpleText: string
+          }
+          top: number
+          trackingParams: string
+          width: number
+        }
+
+      }
+
+    }
+
+    interface thumbnails {
+
+      height: number
+      url: string
+      width: number
+
+    }
+
+    interface playerAds {
+
+      playerLegacyDesktopWatchAdsRenderer: {
+        gutParams: {
+          tag: string
+        }
+        playerAdParams: {
+          enabledEngageTypes: string
+          showContentThumbnail: boolean
+        }
+        showCompanion: boolean
+        showInstream: boolean
+        useGut: boolean
+      }
+
+    }
+
+    interface actions1 {
+
+      action: string
+      addedVideoId: string
+
+    }
+
+    interface actions2 {
+
+      action: string
+      removedVideoId: string
+
+    }
+
+    interface adaptiveFormats {
+
+      approxDurationMs: string
+      averageBitrate: number
+      bitrate: number
+      colorInfo: {
+        matrixCoefficients: string
+        primaries: string
+        transferCharacteristics: string
+      }
+      contentLength: string
+      fps: fps   //IMPORTANT
+      height: number
+      indexRange: {
+        end: string
+        start: string
+      }
+      initRange: {
+        end: string
+        start: string
+      }
+      itag: number
+      lastModified: string
+      mimeType: string
+      projectionType: string
+      quality: quality   //IMPORTANT
+      qualityLabel: qualityLabel   //IMPORTANT
+      url: string   //IMPORTANT
+      width: number
+
+    }
+
+    interface ytInitialPlayerResponse {
+
+      adBreakHeartbeatParams: string
+      adPlacements: adPlacements[]
+      annotations: Annotations.annotations[]
+      attestation: {
+        playerAttestationRenderer: {
+          botguardData: {
+            interpreterSafeUrl: {
+              privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string
+            }
+            program: string
+            serverEnvironment: number
+          }
+          challenge: string
+        }
+      }
+      captions: {
+        playerCaptionsTracklistRenderer: {
+          audioTracks: audioTracks[]   //IMPORTANT
+          captionTracks: captionTracks[]   //IMPORTANT
+          defaultAudioTrackIndex: number   //IMPORTANT
+          translationLanguages: translationLanguages[]   //IMPORTANT
+        }
+      }
+      cards: {
+        cardCollectionRenderer: {
+          allowTeaserDismiss: boolean
+          cards: Cards.cards[]   //IMPORTANT
+          closeButton: {
+            infoCardIconRenderer: {
+              trackingParams: string
+            }
+          }
+          headerText: {
+            simpleText: string
+          }
+          icon: {
+            infoCardIconRenderer: {
+              trackingParams: string
+            }
+          }
+          logIconVisibilityUpdates: boolean
+          trackingParams: string
+        }
+      }
+      endscreen: {
+        endscreenRenderer: {
+          elements: Elements.elements[]   //IMPORTANT
+          startMs: string   //IMPORTANT
+          trackingParams: string
+        }
+      }
+      frameworkUpdates: {
+        entityBatchUpdate: {
+          mutations: []
+          timestamp: {
+            nanos: number
+            seconds: string
+          }
+        }
+      }
+      microformat: {
+        playerMicroformatRenderer: {
+          availableCountries: string[]
+          category: string
+          description: {
+            simpleText: string
+          }
+          embed: {
+            height: number
+            iframeUrl: string
+            width: number
+          }
+          externalChannelId: string   //IMPORTANT
+          hasYpcMetadata: boolean
+          isFamilySafe: boolean   //IMPORTANT
+          isUnlisted: boolean   //IMPORTANT
+          lengthSeconds: string   //IMPORTANT
+          ownerChannelName: string   //IMPORTANT
+          ownerProfileUrl: string   //IMPORTANT
+          publishDate: string   //IMPORTANT
+          thumbnail: {
+            thumbnails: thumbnails[]
+          }
+          title: {
+            simpleText: string   //IMPORTANT
+          }
+          uploadDate: string   //IMPORTANT
+          viewCount: string   //IMPORTANT
+        }
+      }
+      playabilityStatus: {
+        contextParams: string
+        miniplayer: {
+          miniplayerRenderer: {
+            playbackMode: string
+          }
+        }
+        playableInEmbed: boolean   //IMPORTANT
+        status: 'OK'   //IMPORTANT
+      }
+      playbackTracking: {
+        atrUrl: {
+          baseUrl: string
+          elapsedMediaTimeSeconds: number
+        }
+        ptrackingUrl: {
+          baseUrl: string
+        }
+        qoeUrl: {
+          baseUrl: string
+        }
+        videostatsDefaultFlushIntervalSeconds: number
+        videostatsDelayplayUrl: {
+          baseUrl: string
+        }
+        videostatsPlaybackUrl: {
+          baseUrl: string
+        }
+        videostatsScheduledFlushWalltimeSeconds: number[]
+        videostatsWatchtimeUrl: {
+          baseUrl: string
+        }
+      }
+      playerAds: playerAds[]   //IMPORTANT
+      playerConfig: {
+        audioConfig: {
+          enablePerFormatLoudness: boolean
+          loudnessDb: number   //IMPORTANT
+          perceptualLoudnessDb: number
+        }
+        mediaCommonConfig: {
+          dynamicReadaheadConfig: {
+            maxReadAheadMediaTimeMs: number
+            minReadAheadMediaTimeMs: number
+            readAheadGrowthRateMs: number
+          }
+        }
+        streamSelectionConfig: {
+          maxBitrate: string
+        }
+        webPlayerConfig: {
+          useCobaltTvosDash: boolean
+          webPlayerActionsPorting: {
+            addToWatchLaterCommand: {
+              clickTrackingParams: string
+              commandMetadata: {
+                webCommandMetadata: {
+                  apiUrl: string
+                  sendPost: boolean
+                }
+              }
+              playlistEditEndpoint: {
+                actions: actions1[]
+                playlistId: string
+              }
+            }
+            getSharePanelCommand: {
+              clickTrackingParams: string
+              commandMetadata: {
+                webCommandMetadata: {
+                  apiUrl: string
+                  sendPost: boolean
+                }
+              }
+              webPlayerShareEntityServiceEndpoint: {
+                serializedShareEntity: string
+              }
+            }
+            removeFromWatchLaterCommand: {
+              clickTrackingParams: string
+              commandMetadata: {
+                webCommandMetadata: {
+                  apiUrl: string
+                  sendPost: boolean
+                }
+              }
+              playlistEditEndpoint: {
+                actions: actions2[]
+                playlistId: string
+              }
+            }
+            subscribeCommand: {
+              clickTrackingParams: string
+              commandMetadata: {
+                webCommandMetadata: {
+                  apiUrl: string
+                  sendPost: boolean
+                }
+              }
+              subscribeEndpoint: {
+                channelIds: string[]
+                params: string
+              }
+            }
+            unsubscribeCommand: {
+              clickTrackingParams: string
+              commandMetadata: {
+                webCommandMetadata: {
+                  apiUrl: string
+                  sendPost: boolean
+                }
+              }
+              unsubscribeEndpoint: {
+                channelIds: string[]
+                params: string
+              }
+            }
+          }
+        }
+      }
+      responseContext: {
+        mainAppWebResponseContext: {
+          datasyncId: string
+          loggedOut: boolean
+          trackingParam: string
+        }
+        maxAgeSeconds: number
+        serviceTrackingParams: []
+        webResponseContextExtensionData: {
+          hasDecorated: boolean
+        }
+      }
+      storyboards: {
+        playerStoryboardSpecRenderer: {
+          highResolutionRecommendedLevel: number
+          recommendedLevel: number
+          spec: string
+        }
+      }
+      streamingData: {
+        adaptiveFormats: adaptiveFormats[]   //IMPORTANT
+      }
+      trackingParams: string
+      videoDetails: {
+        allowRatings: boolean   //IMPORTANT
+        author: string   //IMPORTANT
+        channelId: string   //IMPORTANT
+        isCrawlable: boolean
+        isLiveContent: boolean   //IMPORTANT
+        isOwnerViewing: boolean   //IMPORTANT
+        isPrivate: boolean   //IMPORTANT
+        isUnpluggedCorpus: boolean
+        keywords: string[]
+        lengthSeconds: string   //IMPORTANT
+        shortDescription: string   //IMPORTANT
+        thumbnail: {
+          thumbnails: thumbnails[]
+        }
+        title: string   //IMPORTANT
+        videoId: string   //IMPORTANT
+        viewCount: string   //IMPORTANT
+      }
 
     }
 
