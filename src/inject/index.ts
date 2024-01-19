@@ -2,10 +2,12 @@ import * as pack from '../../package.json'
 import { logger } from '../logger'
 import { embed as module_embed } from './watch/embed'
 import { events as module_events } from './events'
+import { init as function_init } from './watch/init'
 import { logger as module_logger } from '../logger'
 import { modify as module_modify } from './watch/modify'
 import { mute as module_mute } from './watch/mute'
 import { quality as module_quality } from './watch/quality'
+import { ratiofix as module_ratiofix } from './watch/ratiofix'
 import { sync as module_sync } from './watch/sync'
 import { urlparams as module_urlparams } from './urlparams'
 
@@ -23,9 +25,11 @@ const inject: inject.index.Module = {
 
   watch: {
     embed: module_embed,
+    init: function_init,
     modify: module_modify,
     mute: module_mute,
     quality: module_quality,
+    ratiofix: module_ratiofix,
     sync: module_sync
   },
 
@@ -48,6 +52,11 @@ const inject: inject.index.Module = {
     logger.log('Extension loaded successfully!')
     inject.events.listen('yt-navigate-finish')
     inject.events.listen('yt-navigate-start')
+    try {
+      inject.watch.init()
+    } catch (err) {
+      console.error(err)
+    }
   }
 })();
 

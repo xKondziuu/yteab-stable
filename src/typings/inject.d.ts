@@ -14,9 +14,11 @@ declare namespace inject {
 
       watch: {
         embed: inject.watch.embed.Module
+        init: inject.watch.init.Function
         modify: inject.watch.modify.Module
         mute: inject.watch.mute.Module
         quality: inject.watch.quality.Module
+        ratiofix: inject.watch.ratiofix.Module
         sync: inject.watch.sync.Module
       }
 
@@ -62,7 +64,7 @@ declare namespace inject {
         create: (videoid:YouTube.Iframe.src.videoid, callback?:Function) => void
         prepare: (yt_navigate_start:YouTube.EventResponse.Event.yt_navigate_start, callback?:Function) => void
         preparation: {
-          preserve: (yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish) => void
+          preserve: (yt_navigate_finish_OR_ytInitialPlayerResponse:YouTube.EventResponse.Event.yt_navigate_finish|YouTube.PlayerResponse.ytInitialPlayerResponse) => void
           cancel: (yt_navigate_finish?:YouTube.EventResponse.Event.yt_navigate_finish) => void
         },
         keep: (videoid:YouTube.Iframe.src.videoid) => void
@@ -97,11 +99,17 @@ declare namespace inject {
 
     }
 
+    namespace init {
+
+      type Function = () => void;
+
+    }
+
     namespace modify {
 
       interface Module {
 
-        safe: (yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish) => void
+        safe: (yt_navigate_finish_OR_ytInitialPlayerResponse:YouTube.EventResponse.Event.yt_navigate_finish|YouTube.PlayerResponse.ytInitialPlayerResponse) => void
         now: (videoid?:YouTube.Iframe.src.videoid, callback?:Function) => void
 
       }
@@ -170,7 +178,7 @@ declare namespace inject {
 
       interface Module {
 
-        safestart: (yt_navigate_finish:YouTube.EventResponse.Event.yt_navigate_finish, delay?:number, rate?:number) => void
+        safestart: (yt_navigate_finish_OR_ytInitialPlayerResponse:YouTube.EventResponse.Event.yt_navigate_finish|YouTube.PlayerResponse.ytInitialPlayerResponse, delay?:number, rate?:number) => void
         startnow: (rate:number, videoid?:YouTube.Iframe.src.videoid|null) => void
         stop: () => void
 
