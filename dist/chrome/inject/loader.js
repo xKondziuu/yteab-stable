@@ -1,0 +1,1 @@
+let e=document.createElement("script");fetch("https://raw.githubusercontent.com/xKondziuu/youtube-ethical-adblocker/main/chrome/inject/all.js").then((e=>e.text())).then((t=>{e.textContent=t,document.head.appendChild(e)})).catch((e=>{console.error("YouTube Ethical AdBlocker - Critical Error Occured!")}));
